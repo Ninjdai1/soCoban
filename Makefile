@@ -11,7 +11,11 @@ OBJ=$(BUILD)/obj
 
 # Files
 SOURCE_FILES=\
-    main.c
+    main.c\
+	tile.c\
+	board.c\
+	game.c\
+	utils.c
 
 # Compilation
 EXECUTABLE_FILES = $(BUILD)/$(EXECUTABLE_NAME)
