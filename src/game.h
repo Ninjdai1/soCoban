@@ -8,5 +8,6 @@
 void drawBoardToSurface(Board *b, SDL_Surface * screen);
 
 void movePlayer(Board *b, Direction dir);
+Bool moveEntity(Board *b, Entity *box, Direction dir);
 
 #endif // !GAME_H

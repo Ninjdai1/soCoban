@@ -5,11 +5,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+Bool checkWin(Board *board) {
+    int x, y;
+    for (x=0; x<board->size.x; x++) {
+        for (y=0; y<board->size.y; y++) {
+            if (board->static_tiles[x][y] == GOAL_TILE) {
+                Entity * e = getEntity(board, x, y);
+                if (e==NULL || e->type != BOX_ENTITY_TYPE) {
+                    return FALSE;
+                }
+            }
+        }
+    }
+    return TRUE;
+}
+
+Entity * getEntity(Board *board, int x, int y) {
+    for (int i=0; i<board->entity_count; i++) {
+        Entity * e = &board->entities[i];
+        if (e->pos.x == x && e->pos.y ==  y) {
+            return e;
+        }
+    }
+    return NULL;
+}
+
 void printBoardToText(Board *board) {
     int x, y;
     for (y=0; y<board->size.y; y++) {
         for (x=0; x<board->size.x; x++) {
-            printf("%c", board->static_tiles[y][x]);
+            printf("%c", getTileData(board->static_tiles[x][y]).c);
         }
         printf("\n");
     }
@@ -65,7 +90,7 @@ Board * loadBoardFromString(char *board, int length){
                 }
                 break;
             }
-            Tile t = getTile(board[cursor]);
+            Tile t = getTileFromChar(board[cursor]);
             b->static_tiles[y][x] = t;
             if (t == BOX_SPAWN_TILE || t == PLAYER_SPAWN_TILE) {
                 b->entity_count += 1;
@@ -125,7 +150,7 @@ void freeBoard(Board *board){
     free(board);
 }
 
-Tile getTile(char tile_char) {
+Tile getTileFromChar(char tile_char) {
     switch (tile_char) {
         case '#': return WALL_TILE;
         case 'G': return GOAL_TILE;

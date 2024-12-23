@@ -70,6 +70,10 @@ int main(int argc, char *argv[])
         if (draw==1) {
             drawBoardToSurface(board, screen);
         }
+        if (checkWin(board)) {
+            printf("Victoire !\n");
+            cont = 0;
+        }
     }
     freeBoard(board);
     SDL_Quit();

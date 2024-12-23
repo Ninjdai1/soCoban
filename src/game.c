@@ -48,7 +48,35 @@ void movePlayer(Board *b, Direction dir) {
         Entity * e = &b->entities[i];
         if (e->type == PLAYER_ENTITY_TYPE) {
             Vec2D new_pos = vecSum(e->pos, vec);
-            e->pos = new_pos;
+            Tile t = b->static_tiles[new_pos.x][new_pos.y];
+            if (!getTileData(t).collision) {
+                Entity * ent = getEntity(b, new_pos.x, new_pos.y);
+                if (ent==NULL) {
+                    e->pos = new_pos;
+                } else {
+                    if (ent->type==BOX_ENTITY_TYPE) {
+                        if(moveEntity(b, ent, dir)) {
+                            e->pos = new_pos;
+                        }
+                    }
+                }
+            }
         }
     }
+}
+
+Bool moveEntity(Board *b, Entity *e, Direction dir) {
+    Vec2D vec = getVecFromDirection(dir);
+    Vec2D new_pos = vecSum(e->pos, vec);
+    Tile t = b->static_tiles[new_pos.x][new_pos.y];
+    if (!getTileData(t).collision) {
+        Entity * ent = getEntity(b, new_pos.x, new_pos.y);
+        if (ent==NULL) {
+            e->pos = new_pos;
+        } else {
+            return FALSE;
+        }
+        return TRUE;
+    }
+    return FALSE;
 }

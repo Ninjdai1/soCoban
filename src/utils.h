@@ -1,6 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+typedef enum Bool_E {
+    TRUE = 1,
+    FALSE = 0
+} Bool;
+
 typedef enum Direction_E {
     DIRECTION_UP,
     DIRECTION_DOWN,

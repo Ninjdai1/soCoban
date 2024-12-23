@@ -31,6 +31,10 @@ void freeBoard(Board *board);
  * Get the tile that corresponds to title_char.
  * \note If no corresponding tile is found, returns Air.
  */
-Tile getTile(char tile_char);
+Tile getTileFromChar(char tile_char);
+
+Bool checkWin(Board *board);
+
+Entity * getEntity(Board *board, int x, int y);
 
 #endif // !BOARD_H
