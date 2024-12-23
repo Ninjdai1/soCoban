@@ -1,3 +1,4 @@
+#include <SDL/SDL_keysym.h>
 #pragma GCC diagnostic ignored "-Wswitch"
 
 #include <SDL/SDL.h>
@@ -31,8 +32,11 @@ int main(int argc, char *argv[])
     drawBoardToSurface(b, screen);
 
     int cont=1;
+    int draw = 0;
     SDL_Event event;
     while (cont) {
+        draw = 0;
+        //SDL_PollEvent(&event);
         SDL_WaitEvent(&event);
         switch (event.type) {
             case SDL_QUIT:
@@ -43,9 +47,28 @@ int main(int argc, char *argv[])
                     case 'q':
                         cont=0;
                         break;
+                    case SDLK_UP:
+                        b->player_pos.y--;
+                        draw = 1;
+                        break;
+                    case SDLK_DOWN:
+                        b->player_pos.y++;
+                        draw = 1;
+                        break;
+                    case SDLK_RIGHT:
+                        b->player_pos.x++;
+                        draw = 1;
+                        break;
+                    case SDLK_LEFT:
+                        b->player_pos.x--;
+                        draw = 1;
+                        break;
                 }
                 printf("Keydown\n");
                 break;
+        }
+        if (draw==1) {
+            drawBoardToSurface(b, screen);
         }
     }
     SDL_Quit();

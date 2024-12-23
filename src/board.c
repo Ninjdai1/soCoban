@@ -8,7 +8,7 @@ void printBoardToText(Board *board) {
     int x, y;
     for (y=0; y<board->size.y; y++) {
         for (x=0; x<board->size.x; x++) {
-            printf("%c", board->data[y][x]);
+            printf("%c", board->static_tiles[y][x]);
         }
         printf("\n");
     }
@@ -44,27 +44,47 @@ Board * loadBoardFromString(char *board, int length){
         printf("Invalid board string\n");
         return NULL;
     }
-    int x;
+    int x, y;
     int cursor = 0;
 
     Board * b = malloc(sizeof(Board));
     b->size = getBoardSize(board, length);
-    b->data = malloc(sizeof(Tile *) * b->size.y);
+    b->box_amount = 0;
+    b->static_tiles = malloc(sizeof(Tile *) * b->size.y);
 
     printVec2d(b->size);
 
-    for (int y=0; y<b->size.y; y++) {
-        b->data[y] = malloc(sizeof(Tile) * b->size.x);
+    for (y=0; y<b->size.y; y++) {
+        b->static_tiles[y] = malloc(sizeof(Tile) * b->size.x);
         for (x=0; x<=b->size.x; x++) {
             if (board[cursor]=='\n') {
                 cursor++;
                 for (int t=0; t < (b->size.x-x); t++) {
-                    b->data[y][x+t] = AIR_TILE;
+                    b->static_tiles[y][x+t] = AIR_TILE;
                 }
                 break;
             }
-            b->data[y][x] = getTile(board[cursor]);
+            Tile t = getTile(board[cursor]);
+            b->static_tiles[y][x] = t;
+            if (t == BOX_SPAWN_TILE) {
+                b->box_amount += 1;
+            } else if (t == PLAYER_SPAWN_TILE) {
+                Vec2D pos = {x, y};
+                b->player_pos = pos;
+            }
             cursor++;
+        }
+    }
+
+    b->box_pos = malloc(sizeof(Vec2D) * b->box_amount);
+    int cr_box = 0;
+    for (x=0; x<b->size.x; x++) {
+        for (y=0; y<b->size.y; y++) {
+            if (b->static_tiles[y][x] == BOX_SPAWN_TILE) {
+                Vec2D pos = {x, y};
+                b->box_pos[cr_box] = pos;
+                cr_box++;
+            }
         }
     }
 
@@ -90,9 +110,10 @@ Board * loadBoardFromFile(char *file){
 
 void freeBoard(Board *board){
     for (int i=0; i<board->size.y; i++) {
-        free(board->data[i]);
+        free(board->static_tiles[i]);
     }
-    free(board->data);
+    free(board->static_tiles);
+    free(board->box_pos);
     free(board);
 }
 

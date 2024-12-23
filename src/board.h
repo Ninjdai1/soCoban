@@ -9,7 +9,10 @@
  */
 typedef struct Board_I {
     Vec2D size;
-    Tile ** data; /**<  Tiles of the board*/
+    Tile ** static_tiles; /**<  Tiles of the board*/
+    Vec2D player_pos;
+    int box_amount;
+    Vec2D * box_pos;
 } Board;
 
 /*
