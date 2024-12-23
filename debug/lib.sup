@@ -1,0 +1,77 @@
+{
+   ignore_sdl_initsubsystem
+   Memcheck:Leak
+   ...
+   fun:SDL_InitSubSystem
+   ...
+}
+{
+   ignore_sdl_videoinitreal
+   Memcheck:Leak
+   ...
+   fun:SDL_VideoInit_REAL
+   ...
+}
+{
+    ignore_sdl_dl_open
+    Memcheck:Leak
+    ...
+    fun:_dl_open
+    ...
+}
+{
+    ignore_sdl_dl_init
+    Memcheck:Leak
+    ...
+    fun:_dl_init
+    ...
+}
+{
+    ignore_x11initkeyboard
+    Memcheck:Leak
+    ...
+    fun:X11_InitKeyboard
+    ...
+}
+{
+    ignore_realloc
+    Memcheck:Leak
+    ...
+    fun:realloc
+    ...
+}
+{
+    ignore_sdlmalloc
+    Memcheck:Leak
+    ...
+    fun:SDL_malloc_REAL
+    ...
+}
+{
+    ignore_sdlcreatergbsurface
+    Memcheck:Leak
+    ...
+    fun:SDL_CreateRGBSurface
+    ...
+}
+{
+    ignore_sdlquitsubsystem
+    Memcheck:Leak
+    ...
+    fun:SDL_QuitSubSystem
+    ...
+}
+{
+    ignore_calloc
+    Memcheck:Leak
+    ...
+    fun:calloc
+    ...
+}
+{
+    ignore_calloc
+    Memcheck:Leak
+    ...
+    fun:XSetLocaleModifiers
+    ...
+}

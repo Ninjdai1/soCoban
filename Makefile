@@ -13,6 +13,7 @@ OBJ=$(BUILD)/obj
 SOURCE_FILES=\
     main.c\
 	tile.c\
+	entity.c\
 	board.c\
 	game.c\
 	utils.c

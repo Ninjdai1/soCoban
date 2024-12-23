@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "entity.h"
 #include "utils.h"
 #include "tile.h"
 
@@ -10,9 +11,8 @@
 typedef struct Board_I {
     Vec2D size;
     Tile ** static_tiles; /**<  Tiles of the board*/
-    Vec2D player_pos;
-    int box_amount;
-    Vec2D * box_pos;
+    int entity_count;
+    Entity * entities;
 } Board;
 
 /*

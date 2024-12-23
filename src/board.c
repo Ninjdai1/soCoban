@@ -1,4 +1,5 @@
 #include "board.h"
+#include "entity.h"
 #include "tile.h"
 #include "utils.h"
 #include <stdio.h>
@@ -49,7 +50,7 @@ Board * loadBoardFromString(char *board, int length){
 
     Board * b = malloc(sizeof(Board));
     b->size = getBoardSize(board, length);
-    b->box_amount = 0;
+    b->entity_count = 0;
     b->static_tiles = malloc(sizeof(Tile *) * b->size.y);
 
     printVec2d(b->size);
@@ -66,24 +67,25 @@ Board * loadBoardFromString(char *board, int length){
             }
             Tile t = getTile(board[cursor]);
             b->static_tiles[y][x] = t;
-            if (t == BOX_SPAWN_TILE) {
-                b->box_amount += 1;
-            } else if (t == PLAYER_SPAWN_TILE) {
-                Vec2D pos = {x, y};
-                b->player_pos = pos;
+            if (t == BOX_SPAWN_TILE || t == PLAYER_SPAWN_TILE) {
+                b->entity_count += 1;
             }
             cursor++;
         }
     }
 
-    b->box_pos = malloc(sizeof(Vec2D) * b->box_amount);
-    int cr_box = 0;
+    b->entities = malloc(sizeof(Entity) * b->entity_count);
+    int cr_ety = 0;
     for (x=0; x<b->size.x; x++) {
         for (y=0; y<b->size.y; y++) {
-            if (b->static_tiles[y][x] == BOX_SPAWN_TILE) {
-                Vec2D pos = {x, y};
-                b->box_pos[cr_box] = pos;
-                cr_box++;
+            EntityType e_type = getEntityTypeFromSpawnTile(b->static_tiles[y][x]);
+            if (e_type != INVALID_ENTITY_TYPE) {
+                Entity e = {
+                    .pos = {x, y},
+                    .type = e_type
+                };
+                b->entities[cr_ety] = e;
+                cr_ety++;
             }
         }
     }
@@ -100,12 +102,18 @@ Board * loadBoardFromFile(char *file){
         perror("Error opening board file");
         return NULL;
     }
+
     fseek(f, 0, SEEK_END);
     int length = ftell(f);
     fseek(f, 0, SEEK_SET);
+
     char * board = malloc(sizeof(char)*length);
     fread(board, 1, length, f);
-    return loadBoardFromString(board, length);
+
+    fclose(f);
+    Board * b = loadBoardFromString(board, length);
+    free(board);
+    return b;
 }
 
 void freeBoard(Board *board){
@@ -113,7 +121,7 @@ void freeBoard(Board *board){
         free(board->static_tiles[i]);
     }
     free(board->static_tiles);
-    free(board->box_pos);
+    free(board->entities);
     free(board);
 }
 

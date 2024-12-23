@@ -1,3 +1,4 @@
+#include "utils.h"
 #include <SDL/SDL_keysym.h>
 #pragma GCC diagnostic ignored "-Wswitch"
 
@@ -19,9 +20,9 @@ int main(int argc, char *argv[])
         return -1 ;
     }
 
-    Board * b = loadBoardFromFile("level1.scb");
+    Board * board = loadBoardFromFile("level1.scb");
 
-    printBoardToText(b);
+    printBoardToText(board);
 
     SDL_Surface * screen = NULL;
     if((screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE))==NULL){
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE) ;
     }
 
-    drawBoardToSurface(b, screen);
+    drawBoardToSurface(board, screen);
 
     int cont=1;
     int draw = 0;
@@ -48,29 +49,29 @@ int main(int argc, char *argv[])
                         cont=0;
                         break;
                     case SDLK_UP:
-                        b->player_pos.y--;
+                        movePlayer(board, DIRECTION_UP);
                         draw = 1;
                         break;
                     case SDLK_DOWN:
-                        b->player_pos.y++;
+                        movePlayer(board, DIRECTION_DOWN);
                         draw = 1;
                         break;
                     case SDLK_RIGHT:
-                        b->player_pos.x++;
+                        movePlayer(board, DIRECTION_RIGHT);
                         draw = 1;
                         break;
                     case SDLK_LEFT:
-                        b->player_pos.x--;
+                        movePlayer(board, DIRECTION_LEFT);
                         draw = 1;
                         break;
                 }
-                printf("Keydown\n");
                 break;
         }
         if (draw==1) {
-            drawBoardToSurface(b, screen);
+            drawBoardToSurface(board, screen);
         }
     }
+    freeBoard(board);
     SDL_Quit();
     return EXIT_SUCCESS;
 }
