@@ -9,7 +9,7 @@ Bool checkWin(Board *board) {
     int x, y;
     for (x=0; x<board->size.x; x++) {
         for (y=0; y<board->size.y; y++) {
-            if (board->static_tiles[x][y] == GOAL_TILE) {
+            if (getTile(board, x, y) == GOAL_TILE) {
                 Entity * e = getEntity(board, x, y);
                 if (e==NULL || e->type != BOX_ENTITY_TYPE) {
                     return FALSE;
@@ -29,12 +29,18 @@ Entity * getEntity(Board *board, int x, int y) {
     }
     return NULL;
 }
+Tile getTile(Board *board, int x, int y) {
+    return board->static_tiles[y][x];
+}
+void setTile(Board *board, int x, int y, Tile t){
+    board->static_tiles[y][x] = t;
+}
 
 void printBoardToText(Board *board) {
     int x, y;
     for (y=0; y<board->size.y; y++) {
         for (x=0; x<board->size.x; x++) {
-            printf("%c", getTileData(board->static_tiles[x][y]).c);
+            printf("%c", getTileData(getTile(board, x, y)).c);
         }
         printf("\n");
     }
@@ -86,36 +92,39 @@ Board * loadBoardFromString(char *board, int length){
             if (board[cursor]=='\n') {
                 cursor++;
                 for (int t=0; t < (b->size.x-x); t++) {
-                    b->static_tiles[y][x+t] = AIR_TILE;
+                    setTile(b, x+t, y, AIR_TILE);
                 }
                 break;
             }
             Tile t = getTileFromChar(board[cursor]);
-            b->static_tiles[y][x] = t;
             if (t == BOX_SPAWN_TILE || t == PLAYER_SPAWN_TILE) {
                 b->entity_count += 1;
             }
+            setTile(b, x, y, t);
             cursor++;
         }
     }
-
     b->entities = malloc(sizeof(Entity) * b->entity_count);
+    initEntities(b);
+    return b;
+}
+
+void initEntities(Board *board) {
+    int x, y;
     int cr_ety = 0;
-    for (x=0; x<b->size.x; x++) {
-        for (y=0; y<b->size.y; y++) {
-            EntityType e_type = getEntityTypeFromSpawnTile(b->static_tiles[y][x]);
+    for (x=0; x<board->size.x; x++) {
+        for (y=0; y<board->size.y; y++) {
+            EntityType e_type = getEntityTypeFromSpawnTile(getTile(board, x, y));
             if (e_type != INVALID_ENTITY_TYPE) {
                 Entity e = {
                     .pos = {x, y},
                     .type = e_type
                 };
-                b->entities[cr_ety] = e;
+                board->entities[cr_ety] = e;
                 cr_ety++;
             }
         }
     }
-
-    return b;
 }
 
 /*

@@ -14,7 +14,7 @@ void drawBoardToSurface(Board *b, SDL_Surface *screen) {
             SDL_Surface * rectangle = NULL ;
             rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, PIXEL_SIZE, PIXEL_SIZE, 32, 0, 0, 0, 0) ;
 
-            Color tileColor = getTileData(b->static_tiles[x][y]).col;
+            Color tileColor = getTileData(getTile(b, x, y)).col;
             SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, tileColor.r, tileColor.g, tileColor.b));
 
             SDL_Rect position = {
@@ -48,7 +48,7 @@ void movePlayer(Board *b, Direction dir) {
         Entity * e = &b->entities[i];
         if (e->type == PLAYER_ENTITY_TYPE) {
             Vec2D new_pos = vecSum(e->pos, vec);
-            Tile t = b->static_tiles[new_pos.x][new_pos.y];
+            Tile t = getTile(b, new_pos.x, new_pos.y);
             if (!getTileData(t).collision) {
                 Entity * ent = getEntity(b, new_pos.x, new_pos.y);
                 if (ent==NULL) {
@@ -68,7 +68,7 @@ void movePlayer(Board *b, Direction dir) {
 Bool moveEntity(Board *b, Entity *e, Direction dir) {
     Vec2D vec = getVecFromDirection(dir);
     Vec2D new_pos = vecSum(e->pos, vec);
-    Tile t = b->static_tiles[new_pos.x][new_pos.y];
+    Tile t = getTile(b, new_pos.x, new_pos.y);
     if (!getTileData(t).collision) {
         Entity * ent = getEntity(b, new_pos.x, new_pos.y);
         if (ent==NULL) {

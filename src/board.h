@@ -23,6 +23,8 @@ typedef struct Board_I {
 Board * loadBoardFromString(char *board, int length);
 Board * loadBoardFromFile(char *file);
 
+void initEntities(Board *board);
+
 void printBoardToText(Board *board);
 
 void freeBoard(Board *board);
@@ -36,5 +38,7 @@ Tile getTileFromChar(char tile_char);
 Bool checkWin(Board *board);
 
 Entity * getEntity(Board *board, int x, int y);
+Tile getTile(Board *board, int x, int y);
+void setTile(Board *board, int x, int y, Tile t);
 
 #endif // !BOARD_H
