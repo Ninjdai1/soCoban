@@ -48,6 +48,10 @@ int main(int argc, char *argv[])
                     case 'q':
                         cont=0;
                         break;
+                    case 'r':
+                        initEntities(board);
+                        draw = 1;
+                        break;
                     case SDLK_UP:
                         movePlayer(board, DIRECTION_UP);
                         draw = 1;
