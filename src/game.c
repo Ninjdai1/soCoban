@@ -27,7 +27,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
 
     game->flags = flags;
 
-    game->button_count = 1;
+    game->button_count = 2;
     game->buttons = malloc(sizeof(Button) * game->button_count);
 
     Button btn_reset = {
@@ -42,7 +42,19 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
             .enabled = 1
         }
     };
+    Button btn_win = {
+        .id = "btn_win",
+        .name = "Victory !",
+        .pos = {256, 128},
+        .size = {128, 32},
+        .flags = {
+            .refreshAfterCallback = 0,
+            .visible = 0,
+            .enabled = 0
+        }
+    };
     game->buttons[0] = btn_reset;
+    game->buttons[1] = btn_win;
     
     char level_path[28];
     sprintf(level_path, "levels/level%d.scb", game->current_level);
@@ -100,8 +112,8 @@ void runGame(Game *game) {
         }
         if (checkWin(game->board)) {
             printf("Victoire ! Niveau %d terminé !\n", game->current_level);
-            game->flags.clear = 1;
             if (game->current_level < MAX_LEVEL) {
+                game->flags.clear = 1;
                 game->current_level++;
                 char level_path[28];
                 sprintf(level_path, "levels/level%d.scb", game->current_level);
@@ -109,12 +121,12 @@ void runGame(Game *game) {
                 game->board = loadBoardFromFile(level_path);
                 game->flags.draw = 1;
             } else {
-                printf("Jeu terminé ! Félicitations");
+                printf("Jeu terminé ! Félicitations\n");
+                game->buttons[1].flags.visible = 1;
                 game->flags.running = 0;
             }
         }
         if (game->flags.clear) {
-            printf("clearing\n");
             SDL_Surface * rectangle = NULL ;
             rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, game->screen->w, game->screen->h, 32, 0, 0, 0, 0);
             SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, 0, 0, 0));
@@ -130,6 +142,7 @@ void runGame(Game *game) {
             drawGameToSurface(game);
         }
     }
+    SDL_Delay(2000);
 }
 
 void resetGameBoard(Game *game) {
@@ -147,8 +160,11 @@ void drawGameToSurface(Game *game) {
     drawBoardToSurface(game->board, game->screen);
 
     for (int i=0; i<game->button_count; i++) {
-        drawButtonToSurface(&game->buttons[i], game->screen, game->game_font);
+        if (game->buttons[i].flags.visible) {
+            drawButtonToSurface(&game->buttons[i], game->screen, game->game_font);
+        }
     }
+    SDL_Flip(game->screen);
 }
 
 void movePlayer(Board *b, Direction dir) {
