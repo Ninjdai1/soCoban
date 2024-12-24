@@ -30,6 +30,7 @@ void freeGame(Game *game);
 
 void drawGameToSurface(Game *game);
 
+void resetGameBoard(Game *game);
 /*
  * Déplace toutes les entités joueur dans la direction spécifiée
  */

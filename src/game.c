@@ -36,10 +36,11 @@ Game * initGame(SDL_Surface *screen) {
         .name = "Reset",
         .pos = {640, 640},
         .size = {320, 32},
-        .callback = initEntities,
+        .callback = resetGameBoard,
         .flags = {
             .refreshAfterCallback = 1,
-            .visible = 1
+            .visible = 1,
+            .enabled = 1
         }
     };
     game->buttons[0] = btn_reset;
@@ -65,7 +66,7 @@ void runGame(Game *game) {
                         game->flags.running = 0;
                         break;
                     case 'r':
-                        initEntities(game->board);
+                        resetGameBoard(game);
                         game->flags.draw = 1;
                         break;
                     case SDLK_UP:
@@ -88,8 +89,8 @@ void runGame(Game *game) {
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 btn = getButtonAtPos(game, event.button.x, event.button.y);
-                if (btn != NULL) {
-                    btn->callback(game->board);
+                if ((btn != NULL) && (btn->flags.enabled)) {
+                    btn->callback(game);
                     if (btn->flags.refreshAfterCallback) game->flags.draw = 1;
                 };
                 break;
@@ -112,6 +113,10 @@ void runGame(Game *game) {
             drawGameToSurface(game);
         }
     }
+}
+
+void resetGameBoard(Game *game) {
+    initEntities(game->board);
 }
 
 void freeGame(Game *game) {
