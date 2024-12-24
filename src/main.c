@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     }
 
     int level = 1;
-    char * level_path = malloc(sizeof(char) * 19);
+    char level_path[28];
     sprintf(level_path, "levels/level%d.scb", level);
     Board * board = loadBoardFromFile(level_path);
 
