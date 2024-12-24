@@ -84,8 +84,6 @@ Board * loadBoardFromString(char *board, int length){
     b->entity_count = 0;
     b->static_tiles = malloc(sizeof(Tile *) * b->size.y);
 
-    printVec2d(b->size);
-
     for (y=0; y<b->size.y; y++) {
         b->static_tiles[y] = malloc(sizeof(Tile) * b->size.x);
         for (x=0; x<=b->size.x; x++) {

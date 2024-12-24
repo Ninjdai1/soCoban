@@ -1,5 +1,6 @@
 #include "utils.h"
 #include <SDL/SDL_keysym.h>
+#include <stdlib.h>
 #pragma GCC diagnostic ignored "-Wswitch"
 
 #include <SDL/SDL.h>
@@ -12,6 +13,8 @@
 #define WIDTH 1000
 #define HEIGHT 1000
 
+#define MAX_LEVEL 2
+
 int main(int argc, char *argv[])
 {
     if(SDL_Init(SDL_INIT_VIDEO)==-1){
@@ -20,7 +23,10 @@ int main(int argc, char *argv[])
         return -1 ;
     }
 
-    Board * board = loadBoardFromFile("level1.scb");
+    int level = 1;
+    char * level_path = malloc(sizeof(char) * 19);
+    sprintf(level_path, "levels/level%d.scb", level);
+    Board * board = loadBoardFromFile(level_path);
 
     printBoardToText(board);
 
@@ -71,12 +77,21 @@ int main(int argc, char *argv[])
                 }
                 break;
         }
+        if (checkWin(board)) {
+            printf("Victoire ! Niveau %d terminé !\n", level);
+            if (level < MAX_LEVEL) {
+                level++;
+                sprintf(level_path, "levels/level%d.scb", level);
+                freeBoard(board);
+                board = loadBoardFromFile(level_path);
+                draw = 1;
+            } else {
+                printf("Jeu terminé ! Félicitations");
+                cont = 0;
+            }
+        }
         if (draw==1) {
             drawBoardToSurface(board, screen);
-        }
-        if (checkWin(board)) {
-            printf("Victoire !\n");
-            cont = 0;
         }
     }
     freeBoard(board);
