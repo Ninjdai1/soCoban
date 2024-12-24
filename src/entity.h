@@ -17,7 +17,8 @@ typedef struct EntityData_I {
 typedef enum EntityType_E {
     INVALID_ENTITY_TYPE = -1,
     PLAYER_ENTITY_TYPE, /**< Une entité contrôllée par le joueur*/
-    BOX_ENTITY_TYPE     /**< Une entité devant être déplacée sur un Goal*/
+    BOX_ENTITY_TYPE,     /**< Une entité devant être déplacée sur un Goal*/
+    MAX_ENTITY_TYPE // Utilisée pour la taille d'array de ENTITY_DATA
 } EntityType;
 
 /*
@@ -28,7 +29,7 @@ typedef struct Entity_I {
     Vec2D pos;/**< La position actuelle de l'entité*/
 } Entity;
 
-static const EntityData ENTITY_DATA[BOX_ENTITY_TYPE+1] = {
+static const EntityData ENTITY_DATA[MAX_ENTITY_TYPE] = {
     {/*Player*/
         .color = {255, 255, 0}
     },
