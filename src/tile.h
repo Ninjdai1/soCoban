@@ -23,6 +23,7 @@ typedef enum Tile_E {
     GOAL_TILE,          /**< Objectif*/
     BOX_SPAWN_TILE,     /**< Apparition de Box*/
     PLAYER_SPAWN_TILE,  /**< Apparition de Player*/
+    GOAL_BOX_SPAWN_TILE,/**< Apparition de Box ET Objectif*/
     MAX_TILE // Utilisée pour la taille d'array de TILES
 } Tile;
 
@@ -32,6 +33,7 @@ static const TileData TILES[MAX_TILE] = {
     {'G', {0, 255, 0}, FALSE},
     {'B', {0, 0, 0}, FALSE},
     {'P', {0, 0, 0}, FALSE},
+    {'g', {0, 255, 0}, FALSE},
 };
 
 /*

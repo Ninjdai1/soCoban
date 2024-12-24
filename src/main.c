@@ -13,7 +13,7 @@
 #define WIDTH 1000
 #define HEIGHT 1000
 
-#define MAX_LEVEL 2
+#define MAX_LEVEL 3
 
 int main(int argc, char *argv[])
 {
