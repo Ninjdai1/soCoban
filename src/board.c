@@ -127,9 +127,6 @@ void initEntities(Board *board) {
     }
 }
 
-/*
- * Loads a board from input file
-*/
 Board * loadBoardFromFile(char *file){
     FILE * f = fopen(file, "r");
     if (f==NULL) {
