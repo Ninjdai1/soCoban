@@ -1,6 +1,7 @@
 #ifndef UI_BUTTON_H
 #define UI_BUTTON_H
 #include "../board.h"
+#include <SDL/SDL_ttf.h>
 
 typedef struct Game_I Game; //Déclaration pour éviter les #include recursifs
 
@@ -19,6 +20,6 @@ typedef struct Button_I {
     ButtonFlags flags;
 } Button;
 
-void drawButtonToSurface(Button *b, SDL_Surface *screen);
+void drawButtonToSurface(Button *b, SDL_Surface *screen, TTF_Font *font);
 
 #endif // !UI_BUTTON_H

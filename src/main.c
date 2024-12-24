@@ -1,6 +1,7 @@
 #include "board.h"
 #include "game.h"
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,6 +15,17 @@ int main(int argc, char *argv[])
         SDL_GetError());
         return -1 ;
     }
+    if(TTF_Init() == -1){
+        fprintf(stderr,"Unable to initialize TTF: %s\n",
+        TTF_GetError());
+    }
+
+    TTF_Font * police = NULL ;
+    police = TTF_OpenFont("fonts/midnight_letters/MidnightLetters.ttf", 30);
+    if(police==NULL){
+        fprintf(stderr,"Unable to load TTF: %s\n",
+        TTF_GetError());
+    }
 
     SDL_Surface * screen = NULL;
     if((screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE))==NULL){
@@ -21,12 +33,13 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE) ;
     }
 
-    Game * game = initGame(screen);
+    Game * game = initGame(screen, police);
     printBoardToText(game->board);
 
     runGame(game);
 
     freeGame(game);
     SDL_Quit();
+    TTF_Quit();
     return EXIT_SUCCESS;
 }

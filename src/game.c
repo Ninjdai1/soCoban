@@ -5,21 +5,24 @@
 #include "ui/button.h"
 #include "utils.h"
 #include <SDL/SDL_events.h>
+#include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #pragma GCC diagnostic ignored "-Wswitch"
 
-Game * initGame(SDL_Surface *screen) {
+Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     Game * game = malloc(sizeof(Game));
 
     game->screen = screen;
+    game->game_font = game_font;
     game->current_level = 1;
 
     GameFlags flags = {
         .draw = 0,
-        .running = 1
+        .running = 1,
+        .clear = 0
     };
 
     game->flags = flags;
@@ -30,8 +33,8 @@ Game * initGame(SDL_Surface *screen) {
     Button btn_reset = {
         .id = "btn_reset",
         .name = "Reset",
-        .pos = {640, 640},
-        .size = {320, 32},
+        .pos = {640, 0},
+        .size = {96, 32},
         .callback = resetGameBoard,
         .flags = {
             .refreshAfterCallback = 1,
@@ -97,6 +100,7 @@ void runGame(Game *game) {
         }
         if (checkWin(game->board)) {
             printf("Victoire ! Niveau %d terminé !\n", game->current_level);
+            game->flags.clear = 1;
             if (game->current_level < MAX_LEVEL) {
                 game->current_level++;
                 char level_path[28];
@@ -109,7 +113,20 @@ void runGame(Game *game) {
                 game->flags.running = 0;
             }
         }
-        if (game->flags.draw==1) {
+        if (game->flags.clear) {
+            printf("clearing\n");
+            SDL_Surface * rectangle = NULL ;
+            rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, game->screen->w, game->screen->h, 32, 0, 0, 0, 0);
+            SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, 0, 0, 0));
+
+            SDL_Rect position = {
+                .x = 0,
+                .y = 0
+            };
+            SDL_BlitSurface(rectangle, NULL, game->screen, &position);
+            game->flags.clear = 0;
+        }
+        if (game->flags.draw) {
             drawGameToSurface(game);
         }
     }
@@ -120,6 +137,7 @@ void resetGameBoard(Game *game) {
 }
 
 void freeGame(Game *game) {
+    TTF_CloseFont(game->game_font);
     freeBoard(game->board);
     free(game->buttons);
     free(game);
@@ -129,7 +147,7 @@ void drawGameToSurface(Game *game) {
     drawBoardToSurface(game->board, game->screen);
 
     for (int i=0; i<game->button_count; i++) {
-        drawButtonToSurface(&game->buttons[i], game->screen);
+        drawButtonToSurface(&game->buttons[i], game->screen, game->game_font);
     }
 }
 

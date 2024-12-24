@@ -4,17 +4,21 @@
 #include "board.h"
 #include "utils.h"
 #include "ui/button.h"
+#include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
+#include <stdint.h>
 
 #define MAX_LEVEL 3
 
 typedef struct GameFlags_I {
     uint32_t running:1;
     uint32_t draw:1;
+    uint32_t clear:1;
 } GameFlags;
 
 typedef struct Game_I {
     SDL_Surface * screen;
+    TTF_Font * game_font;
     Board * board;
     GameFlags flags;
     int current_level;
@@ -22,7 +26,7 @@ typedef struct Game_I {
     Button * buttons;
 } Game;
 
-Game * initGame(SDL_Surface *screen);
+Game * initGame(SDL_Surface *screen, TTF_Font *game_font);
 
 void runGame(Game *game);
 
