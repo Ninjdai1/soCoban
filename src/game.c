@@ -27,10 +27,6 @@ Game * initGame(SDL_Surface *screen) {
     game->button_count = 1;
     game->buttons = malloc(sizeof(Button) * game->button_count);
 
-    char level_path[28];
-    sprintf(level_path, "levels/level%d.scb", game->current_level);
-    game->board = loadBoardFromFile(level_path);
-
     Button btn_reset = {
         .id = "btn_reset",
         .name = "Reset",
@@ -44,6 +40,10 @@ Game * initGame(SDL_Surface *screen) {
         }
     };
     game->buttons[0] = btn_reset;
+    
+    char level_path[28];
+    sprintf(level_path, "levels/level%d.scb", game->current_level);
+    game->board = loadBoardFromFile(level_path);
 
     return game;
 }
