@@ -28,6 +28,9 @@ void drawBoardToSurface(Board *b, SDL_Surface *screen) {
     for (x=0; x<b->entity_count; x++) {
         Entity e = b->entities[x];
         Color col = ENTITY_DATA[e.type].color;
+        if (e.type == BOX_ENTITY_TYPE && isGoalTile(getTile(b, e.pos.x, e.pos.y))) {
+            col.b = 125;
+        }
         SDL_Surface * rectangle = NULL ;
         rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, PIXEL_SIZE, PIXEL_SIZE, 32, 0, 0, 0, 0) ;
         SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, col.r, col.g, col.b));

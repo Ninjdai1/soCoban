@@ -41,4 +41,7 @@ static const TileData TILES[MAX_TILE] = {
  */
 TileData getTileData(Tile t);
 
+Bool isGoalTile(Tile t);
+Bool isSpawnerTile(Tile t);
+
 #endif // !TILE_H

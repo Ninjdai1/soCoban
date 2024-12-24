@@ -9,8 +9,7 @@ Bool checkWin(Board *board) {
     int x, y;
     for (x=0; x<board->size.x; x++) {
         for (y=0; y<board->size.y; y++) {
-            Tile t = getTile(board, x, y);
-            if (t == GOAL_TILE || t == GOAL_BOX_SPAWN_TILE) {
+            if (isGoalTile(getTile(board, x, y))) {
                 Entity * e = getEntity(board, x, y);
                 if (e==NULL || e->type != BOX_ENTITY_TYPE) {
                     return FALSE;
@@ -96,9 +95,7 @@ Board * loadBoardFromString(char *board, int length){
                 break;
             }
             Tile t = getTileFromChar(board[cursor]);
-            if (t == BOX_SPAWN_TILE || t == PLAYER_SPAWN_TILE || t == GOAL_BOX_SPAWN_TILE) {
-                b->entity_count += 1;
-            }
+            if (isSpawnerTile(t)) b->entity_count ++;
             setTile(b, x, y, t);
             cursor++;
         }
