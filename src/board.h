@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "utils.h"
 #include "tile.h"
+#include <SDL/SDL_video.h>
 
 /*
  * Representation d'un plateau de jeu
@@ -36,6 +37,11 @@ void initEntities(Board *board);
  * Affiche le plateau sous format texte dans la sortie standart
  */
 void printBoardToText(Board *board);
+
+/*
+ * Dessine le `board` sur le `screen`
+ */
+void drawBoardToSurface(Board *b, SDL_Surface * screen);
 
 /*
  * Libère la mémoire utilisée par le plateau

@@ -46,6 +46,45 @@ void printBoardToText(Board *board) {
     }
 }
 
+#define PIXEL_SIZE 32
+void drawBoardToSurface(Board *b, SDL_Surface *screen) {
+    int x, y;
+    for (y=0; y < b->size.y; y++) {
+        for (x=0; x < b->size.x; x++) {
+            SDL_Surface * rectangle = NULL ;
+            rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, PIXEL_SIZE, PIXEL_SIZE, 32, 0, 0, 0, 0) ;
+
+            Color tileColor = getTileData(getTile(b, x, y)).col;
+            SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, tileColor.r, tileColor.g, tileColor.b));
+
+            SDL_Rect position = {
+                .x = x * PIXEL_SIZE,
+                .y = y * PIXEL_SIZE
+            };
+            SDL_BlitSurface(rectangle, NULL, screen, &position);
+        }
+    }
+
+    for (x=0; x<b->entity_count; x++) {
+        Entity e = b->entities[x];
+        Color col = ENTITY_DATA[e.type].color;
+        if (e.type == BOX_ENTITY_TYPE && isGoalTile(getTile(b, e.pos.x, e.pos.y))) {
+            col.b = 125;
+        }
+        SDL_Surface * rectangle = NULL ;
+        rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, PIXEL_SIZE, PIXEL_SIZE, 32, 0, 0, 0, 0) ;
+        SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, col.r, col.g, col.b));
+
+        SDL_Rect position = {
+            .x = e.pos.x * PIXEL_SIZE,
+            .y = e.pos.y * PIXEL_SIZE
+        };
+        SDL_BlitSurface(rectangle, NULL, screen, &position);
+    }
+
+    SDL_Flip(screen);
+}
+
 Vec2D getBoardSize(char *board, int length) {
     int cursor = 0;
     Vec2D size = {
