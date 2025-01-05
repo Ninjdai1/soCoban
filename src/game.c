@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "config.h"
 #include <SDL/SDL_events.h>
+#include <SDL/SDL_timer.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
 #include <stdio.h>
@@ -18,6 +19,11 @@
 void toggleFileMenu(Game *game) {
     game->flags.show_topbar = !game->flags.show_topbar;
     toggleComponent(&game->components[2], game->flags.show_topbar);
+    game->flags.clear = 1;
+}
+void toggleFileMenu_V(Game *game, int visible) {
+    game->flags.show_topbar = visible;
+    toggleComponent(&game->components[2], visible);
     game->flags.clear = 1;
 }
 
@@ -58,9 +64,9 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         DEFAULT_COMPONENT_INITIALIZERS,
         .type = BUTTON,
         .id = "btn_options",
-        .text = "Options",
+        .text = "Options (O)",
         .pos = {0, 0},
-        .size = {128, 32},
+        .size = {192, 32},
         .callback = toggleFileMenu,
         .flags = {
             .refreshAfterCallback = 1,
@@ -71,9 +77,9 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     Component btn_reset = {
         .type = BUTTON,
         .id = "btn_reset",
-        .text = "Reset",
+        .text = "Reset (R)",
         .pos = {0, 40},
-        .size = {96, 32},
+        .size = {160, 32},
         .callback = resetGameBoard,
         .bg_color = getDefaultColor(COLOR_RED),
         .fg_color = getDefaultColor(COLOR_WHITE),
@@ -100,7 +106,6 @@ void runGame(Game *game) {
     SDL_Event event;
     while (game->flags.running) {
         game->flags.draw = 0;
-        //SDL_PollEvent(&event);
         SDL_WaitEvent(&event);
         switch (event.type) {
             case SDL_QUIT:
@@ -113,6 +118,10 @@ void runGame(Game *game) {
                         break;
                     case 'r':
                         resetGameBoard(game);
+                        game->flags.draw = 1;
+                        break;
+                    case 'o':
+                        toggleFileMenu(game);
                         game->flags.draw = 1;
                         break;
                     case SDLK_UP:
@@ -181,7 +190,7 @@ void runGame(Game *game) {
 
 void resetGameBoard(Game *game) {
     initEntities(game->board);
-    toggleFileMenu(game);
+    toggleFileMenu_V(game, 0);
 }
 
 void freeGame(Game *game) {
