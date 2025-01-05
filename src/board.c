@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define PIXEL_SIZE 32
+#define TOP_MARGIN 64
+
 Bool checkWin(Board *board) {
     int x, y;
     for (x=0; x<board->size.x; x++) {
@@ -46,7 +49,6 @@ void printBoardToText(Board *board) {
     }
 }
 
-#define PIXEL_SIZE 32
 void drawBoardToSurface(Board *b, SDL_Surface *screen) {
     int x, y;
     for (y=0; y < b->size.y; y++) {
@@ -59,7 +61,7 @@ void drawBoardToSurface(Board *b, SDL_Surface *screen) {
 
             SDL_Rect position = {
                 .x = x * PIXEL_SIZE,
-                .y = y * PIXEL_SIZE
+                .y = y * PIXEL_SIZE + TOP_MARGIN
             };
             SDL_BlitSurface(rectangle, NULL, screen, &position);
         }
@@ -77,12 +79,12 @@ void drawBoardToSurface(Board *b, SDL_Surface *screen) {
 
         SDL_Rect position = {
             .x = e.pos.x * PIXEL_SIZE,
-            .y = e.pos.y * PIXEL_SIZE
+            .y = e.pos.y * PIXEL_SIZE + TOP_MARGIN
         };
         SDL_BlitSurface(rectangle, NULL, screen, &position);
     }
 
-    SDL_Flip(screen);
+    //SDL_Flip(screen);
 }
 
 Vec2D getBoardSize(char *board, int length) {

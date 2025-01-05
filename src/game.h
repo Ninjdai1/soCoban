@@ -3,7 +3,7 @@
 
 #include "board.h"
 #include "utils.h"
-#include "ui/button.h"
+#include "ui/component.h"
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
 #include <stdint.h>
@@ -23,7 +23,7 @@ typedef struct Game_I {
     GameFlags flags;
     int current_level;
     int button_count;
-    Button * buttons;
+    Component * components;
 } Game;
 
 Game * initGame(SDL_Surface *screen, TTF_Font *game_font);
@@ -45,6 +45,6 @@ void movePlayer(Board *b, Direction dir);
 Bool moveEntity(Board *b, Entity *box, Direction dir);
 
 // UI
-Button * getButtonAtPos(Game *game, int x, int y);
+Component * getButtonAtPos(Game *game, int x, int y);
 
 #endif // !GAME_H

@@ -17,7 +17,7 @@ SOURCE_FILES=\
 	board.c\
 	game.c\
 	utils.c\
-	ui/button.c
+	ui/component.c
 
 # Compilation
 EXECUTABLE_FILES = $(BUILD)/$(EXECUTABLE_NAME)

@@ -5,21 +5,28 @@
 
 typedef struct Game_I Game; //Déclaration pour éviter les #include recursifs
 
-typedef struct ButtonFlags_I {
+typedef enum ComponentType_E {
+    TEXT_DISPLAY,
+    BUTTON
+} ComponentType;
+
+typedef struct ComponentFlags_I {
     uint8_t visible:1;
     uint8_t enabled:1;
     uint8_t refreshAfterCallback:1;
-} ButtonFlags;
+} ComponentFlags;
 
-typedef struct Button_I {
+typedef struct Component_I {
+    ComponentType type;
     char * id;
     char * name;
     void (*callback)(Game*);
     Vec2D pos;
     Vec2D size;
-    ButtonFlags flags;
-} Button;
+    ComponentFlags flags;
+} Component;
 
-void drawButtonToSurface(Button *b, SDL_Surface *screen, TTF_Font *font);
+void drawComponentToSurface(Component *b, SDL_Surface *screen, TTF_Font *font);
+void toggleComponent(Component *b);
 
 #endif // !UI_BUTTON_H

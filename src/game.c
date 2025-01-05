@@ -2,16 +2,25 @@
 #include "board.h"
 #include "entity.h"
 #include "tile.h"
-#include "ui/button.h"
+#include "ui/component.h"
 #include "utils.h"
+#include "config.h"
 #include <SDL/SDL_events.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <wchar.h>
 
 #pragma GCC diagnostic ignored "-Wswitch"
 
+// Fonctions locales utilisées par les "Components"
+void toggleFileMenu(Game *game) {
+    toggleComponent(&game->components[2]);
+    game->flags.clear = 1;
+}
+
+// Fonctions de game.h
 Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     Game * game = malloc(sizeof(Game));
 
@@ -27,23 +36,12 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
 
     game->flags = flags;
 
-    game->button_count = 2;
-    game->buttons = malloc(sizeof(Button) * game->button_count);
+    game->button_count = 3;
+    game->components = malloc(sizeof(Component) * game->button_count);
 
-    Button btn_reset = {
-        .id = "btn_reset",
-        .name = "Reset",
-        .pos = {640, 0},
-        .size = {96, 32},
-        .callback = resetGameBoard,
-        .flags = {
-            .refreshAfterCallback = 1,
-            .visible = 1,
-            .enabled = 1
-        }
-    };
-    Button btn_win = {
-        .id = "btn_win",
+    Component txt_win = {
+        .type = TEXT_DISPLAY,
+        .id = "txt_win",
         .name = "Victory !",
         .pos = {256, 128},
         .size = {128, 32},
@@ -53,8 +51,35 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
             .enabled = 0
         }
     };
-    game->buttons[0] = btn_reset;
-    game->buttons[1] = btn_win;
+    Component btn_file = {
+        .type = BUTTON,
+        .id = "btn_file",
+        .name = "File",
+        .pos = {0, 0},
+        .size = {96, 32},
+        .callback = toggleFileMenu,
+        .flags = {
+            .refreshAfterCallback = 1,
+            .visible = 1,
+            .enabled = 1
+        }
+    };
+    Component btn_reset = {
+        .type = BUTTON,
+        .id = "btn_reset",
+        .name = "Reset",
+        .pos = {0, 32},
+        .size = {96, 32},
+        .callback = resetGameBoard,
+        .flags = {
+            .refreshAfterCallback = 1,
+            .visible = 0,
+            .enabled = 0
+        }
+    };
+    game->components[0] = txt_win;
+    game->components[1] = btn_file;
+    game->components[2] = btn_reset;
     
     char level_path[28];
     sprintf(level_path, "levels/level%d.scb", game->current_level);
@@ -64,7 +89,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
 }
 
 void runGame(Game *game) {
-    Button *btn;
+    Component *btn;
     drawGameToSurface(game);
     SDL_Event event;
     while (game->flags.running) {
@@ -105,6 +130,9 @@ void runGame(Game *game) {
             case SDL_MOUSEBUTTONDOWN:
                 btn = getButtonAtPos(game, event.button.x, event.button.y);
                 if ((btn != NULL) && (btn->flags.enabled)) {
+                    #if DEBUG
+                    printf("Clic sur %s\n", btn->id);
+                    #endif /* if DEBUG */
                     btn->callback(game);
                     if (btn->flags.refreshAfterCallback) game->flags.draw = 1;
                 };
@@ -122,7 +150,7 @@ void runGame(Game *game) {
                 game->flags.draw = 1;
             } else {
                 printf("Jeu terminé ! Félicitations\n");
-                game->buttons[1].flags.visible = 1;
+                game->components[1].flags.visible = 1;
                 game->flags.running = 0;
             }
         }
@@ -152,7 +180,7 @@ void resetGameBoard(Game *game) {
 void freeGame(Game *game) {
     TTF_CloseFont(game->game_font);
     freeBoard(game->board);
-    free(game->buttons);
+    free(game->components);
     free(game);
 }
 
@@ -160,8 +188,8 @@ void drawGameToSurface(Game *game) {
     drawBoardToSurface(game->board, game->screen);
 
     for (int i=0; i<game->button_count; i++) {
-        if (game->buttons[i].flags.visible) {
-            drawButtonToSurface(&game->buttons[i], game->screen, game->game_font);
+        if (game->components[i].flags.visible) {
+            drawComponentToSurface(&game->components[i], game->screen, game->game_font);
         }
     }
     SDL_Flip(game->screen);
@@ -206,13 +234,23 @@ Bool moveEntity(Board *b, Entity *e, Direction dir) {
     return FALSE;
 }
 
-Button * getButtonAtPos(Game *game, int x, int y) {
+Component * getButtonAtPos(Game *game, int x, int y) {
     for (int i=0; i<game->button_count; i++) {
-        Button *b = &game->buttons[i];
+        Component *b = &game->components[i];
+        #if DEBUG
+        printf("Checking for %s at (%d, %d)\n", b->id, x, y);
+        printf("x: %d, y: %d, w: %d, h: %d\n", b->pos.x, b->pos.y, b->size.x, b->size.y);
+        #endif/* if DEBUG */
         if (
-            (b->pos.x <= x) && (x <= b->pos.x + b->size.x)
+            (b->type == BUTTON)
+            && (b->pos.x <= x) && (x <= b->pos.x + b->size.x)
             && (b->pos.y <= y) && (y <= b->pos.y + b->size.y)
-        ) return b;
+        ) {
+            #if DEBUG
+            printf("Found %s for (%d, %d)\n", b->id, x, y);
+            #endif/* if DEBUG */
+            return b;
+        }
     }
     return NULL;
 }
