@@ -1,22 +1,23 @@
 #include "component.h"
 #include "../config.h"
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_video.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void drawComponentToSurface(Component *b, SDL_Surface *screen, TTF_Font *font) {
+void drawComponentToSurface(Component *c, SDL_Surface *screen, TTF_Font *font) {
     SDL_Surface * rectangle = NULL ;
-    rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, b->size.x + 8, b->size.y + 8, 32, 0, 0, 0, 0) ;
+    rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, c->size.x + 8, c->size.y + 8, 32, 0, 0, 0, 0) ;
 
-    SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, 120, 0, 0));
+    SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, c->bg_color.r, c->bg_color.g, c->bg_color.b));
 
-    SDL_Color cBlanc= {205,205,205};
     SDL_Surface * text = NULL ;
-    text = TTF_RenderText_Blended(font, b->name, cBlanc);
+    text = TTF_RenderText_Blended(font, c->text, c->fg_color);
 
     
     SDL_Rect text_position = {
-        .x = b->pos.x,
-        .y = b->pos.y
+        .x = c->pos.x,
+        .y = c->pos.y
     };
     
     SDL_Rect rect_position = {
@@ -28,10 +29,10 @@ void drawComponentToSurface(Component *b, SDL_Surface *screen, TTF_Font *font) {
     SDL_BlitSurface(text, NULL, screen, &text_position);
 }
 
-void toggleComponent(Component *b) {
+void toggleComponent(Component *b, int show) {
     #if DEBUG
     printf("%s visible: %d -> %d\n", b->id, b->flags.visible, !b->flags.visible);
     #endif /* if DEBUG */
-    b->flags.visible = !b->flags.visible;
-    b->flags.enabled = !b->flags.enabled;
+    b->flags.visible = show;
+    b->flags.enabled = show;
 }

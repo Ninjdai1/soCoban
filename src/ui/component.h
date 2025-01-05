@@ -34,7 +34,15 @@ typedef struct Component_I {
     Vec2D pos;                  /**< Position du Component sur l'écran*/
     Vec2D size;                 /**< Dimensions du Component*/
     ComponentFlags flags;       /**< Données additionnelles du Component*/
+    SDL_Color fg_color;         /**< Couleur d'avant-plan du Component*/
+    SDL_Color bg_color;         /**< Couleur d'arrière-plan du Component*/
 } Component;
+
+/*
+* Macro des valeurs par défaut d'un Component
+* utilisée lors de l'initialisation d'un Component avec une structure par points
+*/
+#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE)
 
 /*
  * Dessine un Component
@@ -42,9 +50,9 @@ typedef struct Component_I {
 void drawComponentToSurface(Component *b, SDL_Surface *screen, TTF_Font *font);
 
 /*
- * Active/Désactive la visibilité et fonctionnalité de clic d'un Component
+ * Active/Désactive la visibilité et fonctionnalité de clic d'un Component selon le paramètre "show": 0 ou 1
  * Principalement utilisé pour des éléments interactifs tels que BUTTON
  */
-void toggleComponent(Component *b);
+void toggleComponent(Component *b, int show);
 
 #endif // !UI_BUTTON_H

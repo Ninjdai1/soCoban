@@ -16,7 +16,8 @@
 
 // Fonctions locales utilisées par les "Components"
 void toggleFileMenu(Game *game) {
-    toggleComponent(&game->components[2]);
+    game->flags.show_topbar = !game->flags.show_topbar;
+    toggleComponent(&game->components[2], game->flags.show_topbar);
     game->flags.clear = 1;
 }
 
@@ -31,7 +32,8 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     GameFlags flags = {
         .draw = 0,
         .running = 1,
-        .clear = 0
+        .clear = 0,
+        .show_topbar = 0
     };
 
     game->flags = flags;
@@ -40,9 +42,10 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     game->components = malloc(sizeof(Component) * game->button_count);
 
     Component txt_win = {
+        DEFAULT_COMPONENT_INITIALIZERS,
         .type = TEXT_DISPLAY,
         .id = "txt_win",
-        .name = "Victory !",
+        .text = "Victoire !",
         .pos = {256, 128},
         .size = {128, 32},
         .flags = {
@@ -51,12 +54,13 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
             .enabled = 0
         }
     };
-    Component btn_file = {
+    Component btn_options = {
+        DEFAULT_COMPONENT_INITIALIZERS,
         .type = BUTTON,
-        .id = "btn_file",
-        .name = "File",
+        .id = "btn_options",
+        .text = "Options",
         .pos = {0, 0},
-        .size = {96, 32},
+        .size = {128, 32},
         .callback = toggleFileMenu,
         .flags = {
             .refreshAfterCallback = 1,
@@ -67,10 +71,12 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     Component btn_reset = {
         .type = BUTTON,
         .id = "btn_reset",
-        .name = "Reset",
-        .pos = {0, 32},
+        .text = "Reset",
+        .pos = {0, 40},
         .size = {96, 32},
         .callback = resetGameBoard,
+        .bg_color = getDefaultColor(COLOR_RED),
+        .fg_color = getDefaultColor(COLOR_WHITE),
         .flags = {
             .refreshAfterCallback = 1,
             .visible = 0,
@@ -78,7 +84,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         }
     };
     game->components[0] = txt_win;
-    game->components[1] = btn_file;
+    game->components[1] = btn_options;
     game->components[2] = btn_reset;
     
     char level_path[28];
@@ -175,6 +181,7 @@ void runGame(Game *game) {
 
 void resetGameBoard(Game *game) {
     initEntities(game->board);
+    toggleFileMenu(game);
 }
 
 void freeGame(Game *game) {

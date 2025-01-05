@@ -14,6 +14,7 @@ typedef struct GameFlags_I {
     uint32_t running:1;
     uint32_t draw:1;
     uint32_t clear:1;
+    uint32_t show_topbar:1;
 } GameFlags;
 
 typedef struct Game_I {
