@@ -41,7 +41,15 @@ static const TileData TILES[MAX_TILE] = {
  */
 TileData getTileData(Tile t);
 
+/*
+ * Renvoie un booléan indiquant si la Tile passée est une Tile d'Objectif
+ * Utilisée car des Tiles peuvent être des Tiles d'Objectif ET d'Apparition
+ */
 Bool isGoalTile(Tile t);
+/*
+ * Renvoie un booléan indiquant si la Tile passée est une Tile d'Apparition
+ * Utilisée car des Tiles peuvent être des Tiles d'Apparition ET d'Objectif
+ */
 Bool isSpawnerTile(Tile t);
 
 #endif // !TILE_H
