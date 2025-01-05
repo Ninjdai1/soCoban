@@ -27,43 +27,43 @@ typedef struct Game_I {
     Component * components;
 } Game;
 
-/*
+/**
  * Initialise le jeu avec le plateau, l'interface utilisateur...
  */
 Game * initGame(SDL_Surface *screen, TTF_Font *game_font);
 
-/*
+/**
  * Lance la boucle principale du jeu
  */
 void runGame(Game *game);
 
-/*
+/**
  * Libère l'espace mémoire utilisé par la structure Game et ses membres
  */
 void freeGame(Game *game);
 
-/*
+/**
  * Appelle les différentes fonctions d'affichage du plateau et de l'interface utilisateur
  */
 void drawGameToSurface(Game *game);
 
-/*
+/**
  * Réinitialise le jeu au début du niveau actuel
  */
 void resetGameBoard(Game *game);
 
-/*
+/**
  * Déplace toutes les entités joueur dans la direction spécifiée
  */
 void movePlayer(Board *b, Direction dir);
 
-/*
+/**
  * Déplace une entité dans la direction spécifiée
  */
 Bool moveEntity(Board *b, Entity *box, Direction dir);
 
 // UI
-/*
+/**
  * Renvoie le premier bouton situé aux coordonnées spécifiées
  */
 Component * getButtonAtPos(Game *game, int x, int y);

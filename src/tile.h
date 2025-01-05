@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-/*
+/**
  * Métadonnées d'une Tile
  */
 typedef struct TileData_I {
@@ -12,7 +12,7 @@ typedef struct TileData_I {
     Bool collision; /**< La Tile a-t-elle des collisions*/
 } TileData;
 
-/*
+/**
  * Types de Tiles
  * Les Tiles n'ayant pas de données, on utilise un enum, dont les valeurs correspondent à un entier, pour limiter l'utilisation de mémoire avec des instances multiples de struct similaires dans les Board
  */
@@ -36,17 +36,17 @@ static const TileData TILES[MAX_TILE] = {
     {'g', {0, 255, 0}, FALSE},
 };
 
-/*
+/**
  * Renvoie les métadonnées de la Tile correspondante
  */
 TileData getTileData(Tile t);
 
-/*
+/**
  * Renvoie un booléan indiquant si la Tile passée est une Tile d'Objectif
  * Utilisée car des Tiles peuvent être des Tiles d'Objectif ET d'Apparition
  */
 Bool isGoalTile(Tile t);
-/*
+/**
  * Renvoie un booléan indiquant si la Tile passée est une Tile d'Apparition
  * Utilisée car des Tiles peuvent être des Tiles d'Apparition ET d'Objectif
  */

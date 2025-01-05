@@ -5,7 +5,7 @@
 
 typedef struct Game_I Game; //Déclaration pour éviter les #include recursifs
 
-/*
+/**
  * Type de Component, utilisé pour les différencier tout en utilisant une structure commune
  */
 typedef enum ComponentType_E {
@@ -13,7 +13,7 @@ typedef enum ComponentType_E {
     BUTTON
 } ComponentType;
 
-/*
+/**
  * Données de Component
  * Utilisées via des Bits d'entier non signé pour limiter l'utilisation de mémoire
  */
@@ -23,7 +23,7 @@ typedef struct ComponentFlags_I {
     uint8_t refreshAfterCallback:1; /**< Après l'activation d'une fonction attachée au Component, doit-on redessiner le Board*/
 } ComponentFlags;
 
-/*
+/**
  * Structure principale d'un Component
  */
 typedef struct Component_I {
@@ -38,18 +38,18 @@ typedef struct Component_I {
     SDL_Color bg_color;         /**< Couleur d'arrière-plan du Component*/
 } Component;
 
-/*
+/**
 * Macro des valeurs par défaut d'un Component
 * utilisée lors de l'initialisation d'un Component avec une structure par points
 */
 #define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE)
 
-/*
+/**
  * Dessine un Component
  */
 void drawComponentToSurface(Component *b, SDL_Surface *screen, TTF_Font *font);
 
-/*
+/**
  * Active/Désactive la visibilité et fonctionnalité de clic d'un Component selon le paramètre "show": 0 ou 1
  * Principalement utilisé pour des éléments interactifs tels que BUTTON
  */

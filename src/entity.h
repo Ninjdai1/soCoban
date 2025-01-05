@@ -4,14 +4,14 @@
 #include "tile.h"
 #include "utils.h"
 
-/*
+/**
  * Metadonnées d'une entité
  */
 typedef struct EntityData_I {
     Color color; /**< Couleur d'affichage de l'entité*/ // TEMPORAIRE: SYSTÈME DE SPRITES ET IMAGES
 } EntityData;
 
-/*
+/**
  * Types d'entités
  */
 typedef enum EntityType_E {
@@ -21,7 +21,7 @@ typedef enum EntityType_E {
     MAX_ENTITY_TYPE // Utilisée pour la taille d'array de ENTITY_DATA
 } EntityType;
 
-/*
+/**
  * Instance d'une entité
  */
 typedef struct Entity_I {
@@ -38,7 +38,7 @@ static const EntityData ENTITY_DATA[MAX_ENTITY_TYPE] = {
     },
 };
 
-/*
+/**
  * Renvoie le type d'entité correspondant à une Tile d'apparition
  */
 EntityType getEntityTypeFromSpawnTile(Tile tile);
