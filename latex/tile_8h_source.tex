@@ -1,0 +1,43 @@
+\hypertarget{tile_8h_source}{}\doxysection{tile.\+h}
+\label{tile_8h_source}\index{src/tile.h@{src/tile.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TILE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TILE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}utils.h"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{9 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structTileData__I}{TileData\_I}} \{}
+\DoxyCodeLine{10     \textcolor{keywordtype}{char} \mbox{\hyperlink{structTileData__I_a80385a4cc327be8d93a57d1b8bc48e78}{c}};         }
+\DoxyCodeLine{11     \mbox{\hyperlink{structColor__I}{Color}} \mbox{\hyperlink{structTileData__I_a5bf771dac07fa70545933d33815fe36c}{col}};       \textcolor{comment}{//TEMPORAIRE: SYSTÈME DE SPRITES ET IMAGES}}
+\DoxyCodeLine{12     Bool \mbox{\hyperlink{structTileData__I_a4d4020a31dc48ccf2a9db33f4e3c9111}{collision}}; }
+\DoxyCodeLine{13 \} \mbox{\hyperlink{structTileData__I}{TileData}};}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{19 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} Tile\_E \{}
+\DoxyCodeLine{20     INVALID\_TILE = -\/1,}
+\DoxyCodeLine{21     AIR\_TILE,           }
+\DoxyCodeLine{22     WALL\_TILE,          }
+\DoxyCodeLine{23     GOAL\_TILE,          }
+\DoxyCodeLine{24     BOX\_SPAWN\_TILE,     }
+\DoxyCodeLine{25     PLAYER\_SPAWN\_TILE,  }
+\DoxyCodeLine{26     GOAL\_BOX\_SPAWN\_TILE,}
+\DoxyCodeLine{27     MAX\_TILE \textcolor{comment}{// Utilisée pour la taille d'array de TILES}}
+\DoxyCodeLine{28 \} Tile;}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{static} \textcolor{keyword}{const} \mbox{\hyperlink{structTileData__I}{TileData}} TILES[MAX\_TILE] = \{}
+\DoxyCodeLine{31     \{\textcolor{charliteral}{' '}, \{0, 0, 0\}, FALSE\},}
+\DoxyCodeLine{32     \{\textcolor{charliteral}{'\#'}, \{255, 255, 255\}, TRUE\},}
+\DoxyCodeLine{33     \{\textcolor{charliteral}{'G'}, \{0, 255, 0\}, FALSE\},}
+\DoxyCodeLine{34     \{\textcolor{charliteral}{'B'}, \{0, 0, 0\}, FALSE\},}
+\DoxyCodeLine{35     \{\textcolor{charliteral}{'P'}, \{0, 0, 0\}, FALSE\},}
+\DoxyCodeLine{36     \{\textcolor{charliteral}{'g'}, \{0, 255, 0\}, FALSE\},}
+\DoxyCodeLine{37 \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{42 \mbox{\hyperlink{structTileData__I}{TileData}} getTileData(Tile t);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{48 Bool isGoalTile(Tile t);}
+\DoxyCodeLine{53 Bool isSpawnerTile(Tile t);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !TILE\_H}}
+
+\end{DoxyCode}

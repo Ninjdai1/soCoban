@@ -1,0 +1,54 @@
+\hypertarget{utils_8h_source}{}\doxysection{utils.\+h}
+\label{utils_8h_source}\index{src/utils.h@{src/utils.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef UTILS\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define UTILS\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <SDL/SDL\_video.h>}}
+\DoxyCodeLine{8 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} Bool\_E \{}
+\DoxyCodeLine{9     TRUE = 1,}
+\DoxyCodeLine{10     FALSE = 0}
+\DoxyCodeLine{11 \} Bool;}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{16 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} Direction\_E \{}
+\DoxyCodeLine{17     DIRECTION\_UP,}
+\DoxyCodeLine{18     DIRECTION\_DOWN,}
+\DoxyCodeLine{19     DIRECTION\_RIGHT,}
+\DoxyCodeLine{20     DIRECTION\_LEFT}
+\DoxyCodeLine{21 \} Direction;}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{26 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} DefaultColor\_E \{}
+\DoxyCodeLine{27     COLOR\_WHITE,}
+\DoxyCodeLine{28     COLOR\_GREY,}
+\DoxyCodeLine{29     COLOR\_BLACK,}
+\DoxyCodeLine{30     COLOR\_RED,}
+\DoxyCodeLine{31     COLOR\_GREEN,}
+\DoxyCodeLine{32     COLOR\_BLUE,}
+\DoxyCodeLine{33     COLOR\_YELLOW,}
+\DoxyCodeLine{34     COLOR\_CYAN,}
+\DoxyCodeLine{35     COLOR\_PURPLE,}
+\DoxyCodeLine{36 \} DefaultColor;}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{41 SDL\_Color getDefaultColor(DefaultColor c);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{46 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structVec2D__I}{Vec2D\_I}} \{}
+\DoxyCodeLine{47     \textcolor{keywordtype}{int} x;}
+\DoxyCodeLine{48     \textcolor{keywordtype}{int} y;}
+\DoxyCodeLine{49 \} \mbox{\hyperlink{structVec2D__I}{Vec2D}};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{54 \textcolor{keywordtype}{void} printVec2d(\mbox{\hyperlink{structVec2D__I}{Vec2D}} vec);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{59 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structColor__I}{Color\_I}} \{}
+\DoxyCodeLine{60     \textcolor{keywordtype}{int} r;}
+\DoxyCodeLine{61     \textcolor{keywordtype}{int} g;}
+\DoxyCodeLine{62     \textcolor{keywordtype}{int} b;}
+\DoxyCodeLine{63 \} \mbox{\hyperlink{structColor__I}{Color}};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{68 \mbox{\hyperlink{structVec2D__I}{Vec2D}} getVecFromDirection(Direction dir);}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{73 \mbox{\hyperlink{structVec2D__I}{Vec2D}} vecSum(\mbox{\hyperlink{structVec2D__I}{Vec2D}} vec1, \mbox{\hyperlink{structVec2D__I}{Vec2D}} vec2);}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !UTILS\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,53 @@
+\hypertarget{component_8h_source}{}\doxysection{component.\+h}
+\label{component_8h_source}\index{src/ui/component.h@{src/ui/component.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef UI\_BUTTON\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define UI\_BUTTON\_H}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../board.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <SDL/SDL\_ttf.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structGame__I}{Game\_I}} \mbox{\hyperlink{structGame__I}{Game}}; \textcolor{comment}{//Déclaration pour éviter les \#include recursifs}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{11 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} ComponentType\_E \{}
+\DoxyCodeLine{12     TEXT\_DISPLAY,}
+\DoxyCodeLine{13     BUTTON}
+\DoxyCodeLine{14 \} ComponentType;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{comment}{/*}}
+\DoxyCodeLine{17 \textcolor{comment}{ * Dans l'ordre de dessin, à quelle priorité dessiner le Component}}
+\DoxyCodeLine{18 \textcolor{comment}{ */}}
+\DoxyCodeLine{19 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} DrawPriority\_E \{}
+\DoxyCodeLine{20     FIRST,}
+\DoxyCodeLine{21     NONE,}
+\DoxyCodeLine{22     LAST}
+\DoxyCodeLine{23 \} DrawPriority;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{29 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structComponentFlags__I}{ComponentFlags\_I}} \{}
+\DoxyCodeLine{30     uint8\_t \mbox{\hyperlink{structComponentFlags__I_a659c2d4935ade6611382c55d11bbb2d8}{visible}}:1;              }
+\DoxyCodeLine{31     uint8\_t \mbox{\hyperlink{structComponentFlags__I_a008d0f541208f0964503dd8edb8b7fb4}{enabled}}:1;              }
+\DoxyCodeLine{32     uint8\_t \mbox{\hyperlink{structComponentFlags__I_aa45e10fddbc9d25e2a6c56910884f12b}{refreshAfterCallback}}:1; }
+\DoxyCodeLine{33 \} \mbox{\hyperlink{structComponentFlags__I}{ComponentFlags}};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{38 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structComponent__I}{Component\_I}} \{}
+\DoxyCodeLine{39     ComponentType \mbox{\hyperlink{structComponent__I_a628f1ee929733798d320dd52c5d09d77}{type}};         }
+\DoxyCodeLine{40     \textcolor{keywordtype}{char} * \mbox{\hyperlink{structComponent__I_aaa2010228a58bd9feafc974af0d20575}{id}};                  }
+\DoxyCodeLine{41     \textcolor{keywordtype}{char} * \mbox{\hyperlink{structComponent__I_a0fef7519d6499da9d640e0cfd5fb415d}{text}};                }
+\DoxyCodeLine{42     void (*\mbox{\hyperlink{structComponent__I_a3cc0802851b5acdc95b98c4d87e45e30}{callback}})(\mbox{\hyperlink{structGame__I}{Game}}*);    }
+\DoxyCodeLine{43     \mbox{\hyperlink{structVec2D__I}{Vec2D}} \mbox{\hyperlink{structComponent__I_a9c6c784ed2d176682305672e4454ed64}{pos}};                  }
+\DoxyCodeLine{44     \mbox{\hyperlink{structVec2D__I}{Vec2D}} \mbox{\hyperlink{structComponent__I_a3d98927858cc139438677cb74f3d4454}{size}};                 }
+\DoxyCodeLine{45     \mbox{\hyperlink{structComponentFlags__I}{ComponentFlags}} \mbox{\hyperlink{structComponent__I_ac8043bbd56fb329dea4c48a7dc883a04}{flags}};       }
+\DoxyCodeLine{46     SDL\_Color \mbox{\hyperlink{structComponent__I_af06fbad19f19941e0bd4b7e6be9752ed}{fg\_color}};         }
+\DoxyCodeLine{47     SDL\_Color \mbox{\hyperlink{structComponent__I_a0b52558e83a68e74e39f63a6d8d67817}{bg\_color}};         }
+\DoxyCodeLine{48     DrawPriority \mbox{\hyperlink{structComponent__I_ad012d0e30bb4b8b703e7e331d4968bef}{priority}};      }
+\DoxyCodeLine{49 \} \mbox{\hyperlink{structComponent__I}{Component}};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#define DEFAULT\_COMPONENT\_INITIALIZERS .bg\_color = getDefaultColor(COLOR\_GREY), .fg\_color = getDefaultColor(COLOR\_WHITE), .priority = NONE}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{60 \textcolor{keywordtype}{void} drawComponentToSurface(\mbox{\hyperlink{structComponent__I}{Component}} *b, SDL\_Surface *screen, TTF\_Font *font);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{66 \textcolor{keywordtype}{void} toggleComponent(\mbox{\hyperlink{structComponent__I}{Component}} *b, \textcolor{keywordtype}{int} show);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !UI\_BUTTON\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,41 @@
+\hypertarget{board_8h_source}{}\doxysection{board.\+h}
+\label{board_8h_source}\index{src/board.h@{src/board.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef BOARD\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define BOARD\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}entity.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}utils.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}tile.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <SDL/SDL\_video.h>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{12 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structBoard__I}{Board\_I}} \{}
+\DoxyCodeLine{13     \mbox{\hyperlink{structVec2D__I}{Vec2D}} \mbox{\hyperlink{structBoard__I_ae4fbc1fc98ed71663d017c58371fec27}{size}};             }
+\DoxyCodeLine{14     Tile ** \mbox{\hyperlink{structBoard__I_a18f0104b8a71679cd88ab4d4f5f7bc17}{static\_tiles}};   }
+\DoxyCodeLine{15     \textcolor{keywordtype}{int} \mbox{\hyperlink{structBoard__I_a969f15e3e6d2e74ab3e46a987aa3416e}{entity\_count}};       }
+\DoxyCodeLine{16     \mbox{\hyperlink{structEntity__I}{Entity}} * \mbox{\hyperlink{structBoard__I_aeeae4b713ac791f0f5fb5b0b4537292a}{entities}};      }
+\DoxyCodeLine{17 \} \mbox{\hyperlink{structBoard__I}{Board}};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{24 \mbox{\hyperlink{structBoard__I}{Board}} * loadBoardFromString(\textcolor{keywordtype}{char} *board, \textcolor{keywordtype}{int} length);}
+\DoxyCodeLine{28 \mbox{\hyperlink{structBoard__I}{Board}} * loadBoardFromFile(\textcolor{keywordtype}{char} *file);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{34 \textcolor{keywordtype}{void} initEntities(\mbox{\hyperlink{structBoard__I}{Board}} *board);}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{39 \textcolor{keywordtype}{void} printBoardToText(\mbox{\hyperlink{structBoard__I}{Board}} *board);}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{44 \textcolor{keywordtype}{void} drawBoardToSurface(\mbox{\hyperlink{structBoard__I}{Board}} *b, SDL\_Surface * screen);}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{49 \textcolor{keywordtype}{void} freeBoard(\mbox{\hyperlink{structBoard__I}{Board}} *board);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{55 Tile getTileFromChar(\textcolor{keywordtype}{char} tile\_char);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{60 Bool checkWin(\mbox{\hyperlink{structBoard__I}{Board}} *board);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{66 \mbox{\hyperlink{structEntity__I}{Entity}} * getEntity(\mbox{\hyperlink{structBoard__I}{Board}} *board, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y);}
+\DoxyCodeLine{70 Tile getTile(\mbox{\hyperlink{structBoard__I}{Board}} *board, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y);}
+\DoxyCodeLine{74 \textcolor{keywordtype}{void} setTile(\mbox{\hyperlink{structBoard__I}{Board}} *board, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, Tile t);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !BOARD\_H}}
+
+\end{DoxyCode}
