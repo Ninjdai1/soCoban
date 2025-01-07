@@ -13,6 +13,15 @@ typedef enum ComponentType_E {
     BUTTON
 } ComponentType;
 
+/*
+ * Dans l'ordre de dessin, à quelle priorité dessiner le Component
+ */
+typedef enum DrawPriority_E {
+    FIRST,
+    NONE,
+    LAST
+} DrawPriority;
+
 /**
  * Données de Component
  * Utilisées via des Bits d'entier non signé pour limiter l'utilisation de mémoire
@@ -36,13 +45,14 @@ typedef struct Component_I {
     ComponentFlags flags;       /**< Données additionnelles du Component*/
     SDL_Color fg_color;         /**< Couleur d'avant-plan du Component*/
     SDL_Color bg_color;         /**< Couleur d'arrière-plan du Component*/
+    DrawPriority priority;      /**< À quelle priorité dessiner le Component*/
 } Component;
 
 /**
 * Macro des valeurs par défaut d'un Component
 * utilisée lors de l'initialisation d'un Component avec une structure par points
 */
-#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE)
+#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE), .priority = NONE
 
 /**
  * Dessine un Component

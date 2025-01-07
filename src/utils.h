@@ -29,7 +29,10 @@ typedef enum DefaultColor_E {
     COLOR_BLACK,
     COLOR_RED,
     COLOR_GREEN,
-    COLOR_BLUE
+    COLOR_BLUE,
+    COLOR_YELLOW,
+    COLOR_CYAN,
+    COLOR_PURPLE,
 } DefaultColor;
 
 /**

@@ -16,15 +16,20 @@
 #pragma GCC diagnostic ignored "-Wswitch"
 
 // Fonctions locales utilisées par les "Components"
-void toggleFileMenu(Game *game) {
+void togglePauseMenu(Game *game) {
     game->flags.show_topbar = !game->flags.show_topbar;
     toggleComponent(&game->components[2], game->flags.show_topbar);
+    toggleComponent(&game->components[3], game->flags.show_topbar);
     game->flags.clear = 1;
 }
-void toggleFileMenu_V(Game *game, int visible) {
+void togglePauseMenu_V(Game *game, int visible) {
     game->flags.show_topbar = visible;
     toggleComponent(&game->components[2], visible);
+    toggleComponent(&game->components[3], visible);
     game->flags.clear = 1;
+}
+void quitGame(Game *game) {
+    game->flags.running = 0;
 }
 
 // Fonctions de game.h
@@ -44,7 +49,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
 
     game->flags = flags;
 
-    game->button_count = 3;
+    game->button_count = 4;
     game->components = malloc(sizeof(Component) * game->button_count);
 
     Component txt_win = {
@@ -67,7 +72,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .text = "Options (O)",
         .pos = {0, 0},
         .size = {192, 32},
-        .callback = toggleFileMenu,
+        .callback = togglePauseMenu,
         .flags = {
             .refreshAfterCallback = 1,
             .visible = 1,
@@ -81,6 +86,21 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .pos = {0, 40},
         .size = {160, 32},
         .callback = resetGameBoard,
+        .bg_color = getDefaultColor(COLOR_YELLOW),
+        .fg_color = getDefaultColor(COLOR_WHITE),
+        .flags = {
+            .refreshAfterCallback = 1,
+            .visible = 0,
+            .enabled = 0
+        }
+    };
+    Component btn_quit = {
+        .type = BUTTON,
+        .id = "btn_quit",
+        .text = "Quitter (Q)",
+        .pos = {0, 80},
+        .size = {192, 32},
+        .callback = quitGame,
         .bg_color = getDefaultColor(COLOR_RED),
         .fg_color = getDefaultColor(COLOR_WHITE),
         .flags = {
@@ -92,6 +112,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     game->components[0] = txt_win;
     game->components[1] = btn_options;
     game->components[2] = btn_reset;
+    game->components[3] = btn_quit;
     
     char level_path[28];
     sprintf(level_path, "levels/level%d.scb", game->current_level);
@@ -121,7 +142,7 @@ void runGame(Game *game) {
                         game->flags.draw = 1;
                         break;
                     case 'o':
-                        toggleFileMenu(game);
+                        togglePauseMenu(game);
                         game->flags.draw = 1;
                         break;
                     case SDLK_UP:
@@ -190,7 +211,7 @@ void runGame(Game *game) {
 
 void resetGameBoard(Game *game) {
     initEntities(game->board);
-    toggleFileMenu_V(game, 0);
+    togglePauseMenu_V(game, 0);
 }
 
 void freeGame(Game *game) {

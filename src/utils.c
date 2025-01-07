@@ -35,6 +35,21 @@ SDL_Color getDefaultColor(DefaultColor c) {
             color.g = 205;
             color.b = 0;
             break;
+        case COLOR_YELLOW:
+            color.r = 255;
+            color.g = 205;
+            color.b = 0;
+            break;
+        case COLOR_CYAN:
+            color.r = 0;
+            color.g = 205;
+            color.b = 187;
+            break;
+        case COLOR_PURPLE:
+            color.r = 230;
+            color.g = 0;
+            color.b = 255;
+            break;
     }
     return color;
 }
