@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "config.h"
 #include <SDL/SDL_events.h>
+#include <SDL/SDL_keysym.h>
 #include <SDL/SDL_timer.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
@@ -16,17 +17,16 @@
 #pragma GCC diagnostic ignored "-Wswitch"
 
 // Fonctions locales utilisées par les "Components"
-void togglePauseMenu(Game *game) {
-    game->flags.show_topbar = !game->flags.show_topbar;
-    toggleComponent(&game->components[2], game->flags.show_topbar);
-    toggleComponent(&game->components[3], game->flags.show_topbar);
-    game->flags.clear = 1;
-}
 void togglePauseMenu_V(Game *game, int visible) {
     game->flags.show_topbar = visible;
     toggleComponent(&game->components[2], visible);
     toggleComponent(&game->components[3], visible);
+    toggleComponent(&game->components[4], visible);
+    toggleComponent(&game->components[5], visible);
     game->flags.clear = 1;
+}
+void togglePauseMenu(Game *game) {
+    togglePauseMenu_V(game, !game->flags.show_topbar);
 }
 void quitGame(Game *game) {
     game->flags.running = 0;
@@ -49,7 +49,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
 
     game->flags = flags;
 
-    game->button_count = 4;
+    game->button_count = 6;
     game->components = malloc(sizeof(Component) * game->button_count);
 
     Component txt_win = {
@@ -69,9 +69,9 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         DEFAULT_COMPONENT_INITIALIZERS,
         .type = BUTTON,
         .id = "btn_options",
-        .text = "Options (O)",
+        .text = "Menu (Esc)",
         .pos = {0, 0},
-        .size = {192, 32},
+        .size = {170, 32},
         .callback = togglePauseMenu,
         .flags = {
             .refreshAfterCallback = 1,
@@ -83,11 +83,11 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .type = BUTTON,
         .id = "btn_reset",
         .text = "Reset (R)",
-        .pos = {0, 40},
+        .pos = {96, 96},
         .size = {160, 32},
         .callback = resetGameBoard,
         .bg_color = getDefaultColor(COLOR_YELLOW),
-        .fg_color = getDefaultColor(COLOR_WHITE),
+        .fg_color = getDefaultColor(COLOR_BLACK),
         .flags = {
             .refreshAfterCallback = 1,
             .visible = 0,
@@ -98,13 +98,41 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .type = BUTTON,
         .id = "btn_quit",
         .text = "Quitter (Q)",
-        .pos = {0, 80},
+        .pos = {96, 146},
         .size = {192, 32},
         .callback = quitGame,
         .bg_color = getDefaultColor(COLOR_RED),
-        .fg_color = getDefaultColor(COLOR_WHITE),
+        .fg_color = getDefaultColor(COLOR_BLACK),
         .flags = {
             .refreshAfterCallback = 1,
+            .visible = 0,
+            .enabled = 0
+        }
+    };
+    Component btn_resume = {
+        .type = BUTTON,
+        .id = "btn_resume",
+        .text = "Continuer (Esc)",
+        .pos = {96, 196},
+        .size = {264, 32},
+        .callback = togglePauseMenu,
+        .bg_color = getDefaultColor(COLOR_GREY),
+        .fg_color = getDefaultColor(COLOR_BLACK),
+        .flags = {
+            .refreshAfterCallback = 1,
+            .visible = 0,
+            .enabled = 0
+        }
+    };
+    Component surface_menu = {
+        .type = SURFACE,
+        .id = "surface_menu",
+        .pos = {64, 64},
+        .size = {screen->w - 128, screen->h - 128},
+        .bg_color = getDefaultColor(COLOR_WHITE),
+        .priority = PRIORITY_FIRST,
+        .flags = {
+            .refreshAfterCallback = 0,
             .visible = 0,
             .enabled = 0
         }
@@ -113,6 +141,8 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     game->components[1] = btn_options;
     game->components[2] = btn_reset;
     game->components[3] = btn_quit;
+    game->components[4] = btn_resume;
+    game->components[5] = surface_menu;
     
     char level_path[28];
     sprintf(level_path, "levels/level%d.scb", game->current_level);
@@ -141,7 +171,7 @@ void runGame(Game *game) {
                         resetGameBoard(game);
                         game->flags.draw = 1;
                         break;
-                    case 'o':
+                    case SDLK_ESCAPE:
                         togglePauseMenu(game);
                         game->flags.draw = 1;
                         break;
@@ -222,10 +252,23 @@ void freeGame(Game *game) {
 }
 
 void drawGameToSurface(Game *game) {
+    int i;
     drawBoardToSurface(game->board, game->screen);
 
-    for (int i=0; i<game->button_count; i++) {
-        if (game->components[i].flags.visible) {
+    for (i=0; i<game->button_count; i++) {
+        if (game->components[i].priority == PRIORITY_FIRST && game->components[i].flags.visible) {
+            drawComponentToSurface(&game->components[i], game->screen, game->game_font);
+        }
+    }
+
+    for (i=0; i<game->button_count; i++) {
+        if (game->components[i].priority == PRIORITY_NONE && game->components[i].flags.visible) {
+            drawComponentToSurface(&game->components[i], game->screen, game->game_font);
+        }
+    }
+
+    for (i=0; i<game->button_count; i++) {
+        if (game->components[i].priority == PRIORITY_LAST && game->components[i].flags.visible) {
             drawComponentToSurface(&game->components[i], game->screen, game->game_font);
         }
     }

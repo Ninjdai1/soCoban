@@ -10,16 +10,17 @@ typedef struct Game_I Game; //Déclaration pour éviter les #include recursifs
  */
 typedef enum ComponentType_E {
     TEXT_DISPLAY,
-    BUTTON
+    BUTTON,
+    SURFACE
 } ComponentType;
 
 /*
  * Dans l'ordre de dessin, à quelle priorité dessiner le Component
  */
 typedef enum DrawPriority_E {
-    FIRST,
-    NONE,
-    LAST
+    PRIORITY_FIRST = -1,
+    PRIORITY_NONE = 0,
+    PRIORITY_LAST = 1
 } DrawPriority;
 
 /**
@@ -52,7 +53,7 @@ typedef struct Component_I {
 * Macro des valeurs par défaut d'un Component
 * utilisée lors de l'initialisation d'un Component avec une structure par points
 */
-#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE), .priority = NONE
+#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE), .priority = PRIORITY_NONE
 
 /**
  * Dessine un Component
