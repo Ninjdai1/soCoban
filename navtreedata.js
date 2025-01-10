@@ -25,6 +25,9 @@
 var NAVTREE =
 [
   [ "SoCoban", "index.html", [
+    [ "LICENSE", "md_assets_LICENSE.html", null ],
+    [ "LICENSE", "md_fonts_midnight_letters_LICENSE.html", null ],
+    [ "LICENSE", "md_LICENSE.html", null ],
     [ "Classes", "annotated.html", [
       [ "Liste des classes", "annotated.html", "annotated_dup" ],
       [ "Index des classes", "classes.html", null ],

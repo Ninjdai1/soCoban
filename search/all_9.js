@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['text_0',['text',['../structComponent__I.html#a0fef7519d6499da9d640e0cfd5fb415d',1,'Component_I']]],
-  ['tiledata_5fi_1',['TileData_I',['../structTileData__I.html',1,'']]],
-  ['type_2',['type',['../structEntity__I.html#ad2f27644b99b7bc2131e097ce72ea6ad',1,'Entity_I::type()'],['../structComponent__I.html#a628f1ee929733798d320dd52c5d09d77',1,'Component_I::type()']]]
+  ['size_0',['size',['../structBoard__I.html#ae4fbc1fc98ed71663d017c58371fec27',1,'Board_I::size()'],['../structComponent__I.html#a3d98927858cc139438677cb74f3d4454',1,'Component_I::size()']]],
+  ['static_5ftiles_1',['static_tiles',['../structBoard__I.html#a18f0104b8a71679cd88ab4d4f5f7bc17',1,'Board_I']]]
 ];
