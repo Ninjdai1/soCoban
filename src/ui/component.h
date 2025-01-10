@@ -46,6 +46,7 @@ typedef struct Component_I {
     ComponentFlags flags;       /**< Données additionnelles du Component*/
     SDL_Color fg_color;         /**< Couleur d'avant-plan du Component*/
     SDL_Color bg_color;         /**< Couleur d'arrière-plan du Component*/
+    int bg_alpha;               /**< Transparence d'arrière-plan du Component*/
     DrawPriority priority;      /**< À quelle priorité dessiner le Component*/
 } Component;
 
@@ -53,7 +54,7 @@ typedef struct Component_I {
 * Macro des valeurs par défaut d'un Component
 * utilisée lors de l'initialisation d'un Component avec une structure par points
 */
-#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE), .priority = PRIORITY_NONE
+#define DEFAULT_COMPONENT_INITIALIZERS .bg_color = getDefaultColor(COLOR_GREY), .fg_color = getDefaultColor(COLOR_WHITE), .priority = PRIORITY_NONE, .bg_alpha = 255
 
 /**
  * Dessine un Component

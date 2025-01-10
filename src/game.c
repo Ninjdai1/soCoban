@@ -87,6 +87,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .size = {160, 32},
         .callback = resetGameBoard,
         .bg_color = getDefaultColor(COLOR_YELLOW),
+        .bg_alpha = 255,
         .fg_color = getDefaultColor(COLOR_BLACK),
         .flags = {
             .refreshAfterCallback = 1,
@@ -102,6 +103,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .size = {192, 32},
         .callback = quitGame,
         .bg_color = getDefaultColor(COLOR_RED),
+        .bg_alpha = 255,
         .fg_color = getDefaultColor(COLOR_BLACK),
         .flags = {
             .refreshAfterCallback = 1,
@@ -117,6 +119,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .size = {264, 32},
         .callback = togglePauseMenu,
         .bg_color = getDefaultColor(COLOR_GREY),
+        .bg_alpha = 255,
         .fg_color = getDefaultColor(COLOR_BLACK),
         .flags = {
             .refreshAfterCallback = 1,
@@ -130,6 +133,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
         .pos = {64, 64},
         .size = {screen->w - 128, screen->h - 128},
         .bg_color = getDefaultColor(COLOR_WHITE),
+        .bg_alpha = 240,
         .priority = PRIORITY_FIRST,
         .flags = {
             .refreshAfterCallback = 0,
@@ -210,6 +214,8 @@ void runGame(Game *game) {
         }
         if (checkWin(game->board)) {
             printf("Victoire ! Niveau %d terminé !\n", game->current_level);
+            drawGameToSurface(game);
+            SDL_Delay(1000);
             if (game->current_level < MAX_LEVEL) {
                 game->flags.clear = 1;
                 game->current_level++;
@@ -240,7 +246,6 @@ void runGame(Game *game) {
             drawGameToSurface(game);
         }
     }
-    SDL_Delay(2000);
 }
 
 void resetGameBoard(Game *game) {
