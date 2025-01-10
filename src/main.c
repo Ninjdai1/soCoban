@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_video.h>
 #include <stdio.h>
 
 #define WIDTH 1000
@@ -38,6 +39,7 @@ int main(int argc, char *argv[])
         fprintf(stderr,"Error setting SDL Video Mode: %s\n",SDL_GetError());
         exit(EXIT_FAILURE) ;
     }
+    SDL_WM_SetCaption("SoCoban", "game");
 
     Game * game = initGame(screen, police);
 
