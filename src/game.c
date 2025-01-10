@@ -249,6 +249,9 @@ void runGame(Game *game) {
                 game->flags.draw = 1;
             } else {
                 printf("Jeu terminé ! Félicitations\n");
+                for (int lvl=0; lvl<MAX_LEVEL; lvl++) {
+                    printf("Score du niveau %d: %d\n", lvl+1, game->score[lvl]);
+                }
                 game->components[1].flags.visible = 1;
                 game->flags.running = 0;
             }
