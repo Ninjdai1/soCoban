@@ -11,10 +11,9 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_video.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <wchar.h>
 
+// Pour ignorer les avertissements de GCC car les switch utilisés pour les events n'ont pas un cas toutes les possibilités
 #pragma GCC diagnostic ignored "-Wswitch"
 
 // Fonctions locales utilisées par les "Components"

@@ -3,7 +3,6 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #define WIDTH 1000
 #define HEIGHT 1000
