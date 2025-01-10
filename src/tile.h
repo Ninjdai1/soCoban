@@ -31,6 +31,7 @@ typedef enum Tile_E {
 static const TileData TILES[MAX_TILE] = {
     {' ', {0, 0, 0}, FALSE},
     {'#', {255, 255, 255}, TRUE},
+    {'_', {0, 0, 0}, FALSE},
     {'G', {0, 255, 0}, FALSE},
     {'B', {0, 0, 0}, FALSE},
     {'P', {0, 0, 0}, FALSE},
