@@ -45,5 +45,6 @@ int main(int argc, char *argv[])
     freeGame(game);
     SDL_Quit();
     TTF_Quit();
+    IMG_Quit();
     return EXIT_SUCCESS;
 }
