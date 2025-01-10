@@ -17,16 +17,16 @@
 #pragma GCC diagnostic ignored "-Wswitch"
 
 // Fonctions locales utilisées par les "Components"
-void togglePauseMenu_V(Game *game, int visible) {
-    game->flags.show_topbar = visible;
-    toggleComponent(&game->components[2], visible);
-    toggleComponent(&game->components[3], visible);
-    toggleComponent(&game->components[4], visible);
-    toggleComponent(&game->components[5], visible);
+void togglePauseMenu_V(Game *game, int toggled) {
+    game->flags.paused = toggled;
+    toggleComponent(&game->components[2], toggled);
+    toggleComponent(&game->components[3], toggled);
+    toggleComponent(&game->components[4], toggled);
+    toggleComponent(&game->components[5], toggled);
     game->flags.clear = 1;
 }
 void togglePauseMenu(Game *game) {
-    togglePauseMenu_V(game, !game->flags.show_topbar);
+    togglePauseMenu_V(game, !game->flags.paused);
 }
 void quitGame(Game *game) {
     game->flags.running = 0;
@@ -41,10 +41,10 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     game->current_level = 1;
 
     GameFlags flags = {
-        .draw = 0,
         .running = 1,
-        .clear = 0,
-        .show_topbar = 0
+        .paused = 0,
+        .draw = 0,
+        .clear = 0
     };
 
     game->flags = flags;
@@ -176,19 +176,23 @@ void runGame(Game *game) {
                         game->flags.draw = 1;
                         break;
                     case SDLK_UP:
+                        if (game->flags.paused) continue;
                         movePlayer(game->board, DIRECTION_UP);
                         game->flags.draw = 1;
                         break;
                     case SDLK_DOWN:
+                        if (game->flags.paused) continue;
                         movePlayer(game->board, DIRECTION_DOWN);
                         game->flags.draw = 1;
                         break;
                     case SDLK_RIGHT:
+                        if (game->flags.paused) continue;
                         movePlayer(game->board, DIRECTION_RIGHT);
                         game->flags.draw = 1;
                         break;
                     case SDLK_LEFT:
-                       movePlayer(game->board, DIRECTION_LEFT);
+                        if (game->flags.paused) continue;
+                        movePlayer(game->board, DIRECTION_LEFT);
                         game->flags.draw = 1;
                         break;
                 }

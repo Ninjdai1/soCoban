@@ -10,6 +10,7 @@ void drawComponentToSurface(Component *c, SDL_Surface *screen, TTF_Font *font) {
     rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, c->size.x + 8, c->size.y + 8, 32, 0, 0, 0, 0) ;
 
     SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, c->bg_color.r, c->bg_color.g, c->bg_color.b));
+    SDL_SetAlpha(rectangle, SDL_SRCALPHA, 200);
     
     SDL_Rect text_position = {
         .x = c->pos.x,
