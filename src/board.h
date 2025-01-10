@@ -19,7 +19,7 @@ typedef struct Board_I {
 /**
  * Renvoie un plateau généré à partir d'un string
  * Le plateau est représenté dans le string comme plusieurs lignes séparées par un \n.
- * Air: ' '; Wall: '#'; Goal: 'G'; PlayerSpawn: 'P'; BoxSpawn: 'B', Goal AND BoxSpawn: 'g';
+ * Air: ' '; Wall: '#'; Goal: 'G'; PlayerSpawn: 'P'; BoxSpawn: 'B', Goal AND BoxSpawn: 'g'; Floor: '_';
  */
 Board * loadBoardFromString(char *board, int length);
 /**

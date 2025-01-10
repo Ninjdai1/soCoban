@@ -196,6 +196,7 @@ void freeBoard(Board *board){
 Tile getTileFromChar(char tile_char) {
     switch (tile_char) {
         case '#': return WALL_TILE;
+        case '_': return FLOOR_TILE;
         case 'G': return GOAL_TILE;
         case 'B': return BOX_SPAWN_TILE;
         case 'P': return PLAYER_SPAWN_TILE;

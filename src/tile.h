@@ -20,6 +20,7 @@ typedef enum Tile_E {
     INVALID_TILE = -1,
     AIR_TILE,           /**< Air*/
     WALL_TILE,          /**< Mur*/
+    FLOOR_TILE,         /**< Sol*/
     GOAL_TILE,          /**< Objectif*/
     BOX_SPAWN_TILE,     /**< Apparition de Box*/
     PLAYER_SPAWN_TILE,  /**< Apparition de Player*/
