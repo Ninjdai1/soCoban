@@ -1,5 +1,6 @@
 var structComponent__I =
 [
+    [ "bg_alpha", "structComponent__I.html#a16fc451bbff9c990fac823f57555f5f1", null ],
     [ "bg_color", "structComponent__I.html#a0b52558e83a68e74e39f63a6d8d67817", null ],
     [ "callback", "structComponent__I.html#a3cc0802851b5acdc95b98c4d87e45e30", null ],
     [ "fg_color", "structComponent__I.html#af06fbad19f19941e0bd4b7e6be9752ed", null ],

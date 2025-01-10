@@ -40,15 +40,16 @@
 \DoxyCodeLine{46     \mbox{\hyperlink{structComponentFlags__I}{ComponentFlags}} \mbox{\hyperlink{structComponent__I_ac8043bbd56fb329dea4c48a7dc883a04}{flags}};       }
 \DoxyCodeLine{47     SDL\_Color \mbox{\hyperlink{structComponent__I_af06fbad19f19941e0bd4b7e6be9752ed}{fg\_color}};         }
 \DoxyCodeLine{48     SDL\_Color \mbox{\hyperlink{structComponent__I_a0b52558e83a68e74e39f63a6d8d67817}{bg\_color}};         }
-\DoxyCodeLine{49     DrawPriority \mbox{\hyperlink{structComponent__I_ad012d0e30bb4b8b703e7e331d4968bef}{priority}};      }
-\DoxyCodeLine{50 \} \mbox{\hyperlink{structComponent__I}{Component}};}
-\DoxyCodeLine{51 }
-\DoxyCodeLine{56 \textcolor{preprocessor}{\#define DEFAULT\_COMPONENT\_INITIALIZERS .bg\_color = getDefaultColor(COLOR\_GREY), .fg\_color = getDefaultColor(COLOR\_WHITE), .priority = PRIORITY\_NONE}}
-\DoxyCodeLine{57 }
-\DoxyCodeLine{61 \textcolor{keywordtype}{void} drawComponentToSurface(\mbox{\hyperlink{structComponent__I}{Component}} *b, SDL\_Surface *screen, TTF\_Font *font);}
-\DoxyCodeLine{62 }
-\DoxyCodeLine{67 \textcolor{keywordtype}{void} toggleComponent(\mbox{\hyperlink{structComponent__I}{Component}} *b, \textcolor{keywordtype}{int} show);}
-\DoxyCodeLine{68 }
-\DoxyCodeLine{69 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !UI\_BUTTON\_H}}
+\DoxyCodeLine{49     \textcolor{keywordtype}{int} \mbox{\hyperlink{structComponent__I_a16fc451bbff9c990fac823f57555f5f1}{bg\_alpha}};               }
+\DoxyCodeLine{50     DrawPriority \mbox{\hyperlink{structComponent__I_ad012d0e30bb4b8b703e7e331d4968bef}{priority}};      }
+\DoxyCodeLine{51 \} \mbox{\hyperlink{structComponent__I}{Component}};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#define DEFAULT\_COMPONENT\_INITIALIZERS .bg\_color = getDefaultColor(COLOR\_GREY), .fg\_color = getDefaultColor(COLOR\_WHITE), .priority = PRIORITY\_NONE, .bg\_alpha = 255}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{62 \textcolor{keywordtype}{void} drawComponentToSurface(\mbox{\hyperlink{structComponent__I}{Component}} *b, SDL\_Surface *screen, TTF\_Font *font);}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{68 \textcolor{keywordtype}{void} toggleComponent(\mbox{\hyperlink{structComponent__I}{Component}} *b, \textcolor{keywordtype}{int} show);}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// !UI\_BUTTON\_H}}
 
 \end{DoxyCode}
