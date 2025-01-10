@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define PIXEL_SIZE 32
+#define PIXEL_SIZE 64
 #define TOP_MARGIN 64
 
 Bool checkWin(Board *board) {

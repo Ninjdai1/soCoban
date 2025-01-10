@@ -8,7 +8,7 @@
 #include <SDL/SDL_video.h>
 #include <stdint.h>
 
-#define MAX_LEVEL 3
+#define MAX_LEVEL 4
 
 typedef struct GameFlags_I {
     uint32_t running:1;

@@ -1,4 +1,3 @@
-#include "board.h"
 #include "game.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -34,7 +33,6 @@ int main(int argc, char *argv[])
     }
 
     Game * game = initGame(screen, police);
-    printBoardToText(game->board);
 
     runGame(game);
 
