@@ -125,26 +125,27 @@ $(document).ready(function(){initNavTree('game_8h_source.html',''); initResizabl
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">int</span> current_level;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">int</span> button_count;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_struct" href="structComponent__I.html">Component</a> * components;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>} <a class="code hl_struct" href="structGame__I.html">Game</a>;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><a class="code hl_struct" href="structGame__I.html">Game</a> * initGame(SDL_Surface *screen, TTF_Font *game_font);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keywordtype">void</span> runGame(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keywordtype">void</span> freeGame(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keywordtype">void</span> drawGameToSurface(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keywordtype">void</span> resetGameBoard(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keywordtype">void</span> movePlayer(<a class="code hl_struct" href="structBoard__I.html">Board</a> *b, Direction dir);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>Bool moveEntity(<a class="code hl_struct" href="structBoard__I.html">Board</a> *b, <a class="code hl_struct" href="structEntity__I.html">Entity</a> *box, Direction dir);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">// UI</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="comment"></span><a class="code hl_struct" href="structComponent__I.html">Component</a> * getButtonAtPos(<a class="code hl_struct" href="structGame__I.html">Game</a> *game, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#endif </span><span class="comment">// !GAME_H</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">int</span> score[MAX_LEVEL];</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>} <a class="code hl_struct" href="structGame__I.html">Game</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><a class="code hl_struct" href="structGame__I.html">Game</a> * initGame(SDL_Surface *screen, TTF_Font *game_font);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">void</span> runGame(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> freeGame(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keywordtype">void</span> drawGameToSurface(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keywordtype">void</span> resetGameBoard(<a class="code hl_struct" href="structGame__I.html">Game</a> *game);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keywordtype">void</span> movePlayer(<a class="code hl_struct" href="structGame__I.html">Game</a> *g, Direction dir);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>Bool moveEntity(<a class="code hl_struct" href="structBoard__I.html">Board</a> *b, <a class="code hl_struct" href="structEntity__I.html">Entity</a> *box, Direction dir);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment">// UI</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment"></span><a class="code hl_struct" href="structComponent__I.html">Component</a> * getButtonAtPos(<a class="code hl_struct" href="structGame__I.html">Game</a> *game, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#endif </span><span class="comment">// !GAME_H</span></div>
 <div class="ttc" id="astructBoard__I_html"><div class="ttname"><a href="structBoard__I.html">Board_I</a></div><div class="ttdef"><b>Definition:</b> board.h:12</div></div>
 <div class="ttc" id="astructComponent__I_html"><div class="ttname"><a href="structComponent__I.html">Component_I</a></div><div class="ttdef"><b>Definition:</b> component.h:39</div></div>
 <div class="ttc" id="astructEntity__I_html"><div class="ttname"><a href="structEntity__I.html">Entity_I</a></div><div class="ttdef"><b>Definition:</b> entity.h:27</div></div>
