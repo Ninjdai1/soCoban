@@ -18,10 +18,12 @@ int main(int argc, char *argv[])
     if(TTF_Init() == -1){
         fprintf(stderr,"Unable to initialize TTF: %s\n",
         TTF_GetError());
+        return -1 ;
     }
     if (IMG_Init(IMG_INIT_PNG) == 0) {
         fprintf(stderr,"Unable to initialize IMG: %s\n",
         IMG_GetError());
+        return -1 ;
     }
 
     TTF_Font * police = NULL ;
