@@ -56,7 +56,7 @@ void drawBoardToSurface(Board *b, SDL_Surface *screen) {
     for (y=0; y < b->size.y; y++) {
         for (x=0; x < b->size.x; x++) {
             Tile t = getTile(b, x, y);
-            if (t == GOAL_TILE) {
+            if (t == GOAL_TILE || t == GOAL_BOX_SPAWN_TILE) {
                 sprite = "assets/goal.png";
             } else if (t == WALL_TILE) {
                 sprite = "assets/wall.png";
