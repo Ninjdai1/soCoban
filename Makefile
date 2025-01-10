@@ -1,7 +1,7 @@
 # Compiler options
 CC=gcc
 CFLAGS=`sdl-config --cflags` -c -Wall
-LDFLAGS=`sdl-config --libs` -l SDL_ttf
+LDFLAGS=`sdl-config --libs` -l SDL_ttf -l SDL_image
 EXECUTABLE_NAME=main
 
 # Folders

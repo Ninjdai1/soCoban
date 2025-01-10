@@ -2,10 +2,11 @@
 #include "entity.h"
 #include "tile.h"
 #include "utils.h"
+#include <SDL/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define PIXEL_SIZE 64
+#define PIXEL_SIZE 32
 #define TOP_MARGIN 64
 
 Bool checkWin(Board *board) {
@@ -51,40 +52,55 @@ void printBoardToText(Board *board) {
 
 void drawBoardToSurface(Board *b, SDL_Surface *screen) {
     int x, y;
+    char * sprite;
     for (y=0; y < b->size.y; y++) {
         for (x=0; x < b->size.x; x++) {
-            SDL_Surface * rectangle = NULL ;
-            rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, PIXEL_SIZE, PIXEL_SIZE, 32, 0, 0, 0, 0) ;
+            Tile t = getTile(b, x, y);
+            if (t == GOAL_TILE) {
+                sprite = "assets/goal.png";
+            } else if (t == WALL_TILE) {
+                sprite = "assets/wall.png";
+            } else if (t == FLOOR_TILE || isSpawnerTile(t)) {
+                sprite = "assets/floor.png";
+            }
+            if (sprite == NULL) {
+                continue;
+            }
 
-            Color tileColor = getTileData(getTile(b, x, y)).col;
-            SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, tileColor.r, tileColor.g, tileColor.b));
+            SDL_Surface * sprite_surface = IMG_Load(sprite);
 
             SDL_Rect position = {
                 .x = x * PIXEL_SIZE,
                 .y = y * PIXEL_SIZE + TOP_MARGIN
             };
-            SDL_BlitSurface(rectangle, NULL, screen, &position);
+            SDL_BlitSurface(sprite_surface, NULL, screen, &position);
+            sprite = NULL;
         }
     }
 
     for (x=0; x<b->entity_count; x++) {
         Entity e = b->entities[x];
-        Color col = ENTITY_DATA[e.type].color;
-        if (e.type == BOX_ENTITY_TYPE && isGoalTile(getTile(b, e.pos.x, e.pos.y))) {
-            col.b = 125;
+        if (e.type == BOX_ENTITY_TYPE) {
+            if (isGoalTile(getTile(b, e.pos.x, e.pos.y))) {
+                sprite = "assets/box_on_goal.png";
+            } else {
+                sprite = "assets/box.png";
+            }
+        } else if (e.type == PLAYER_ENTITY_TYPE) {
+            sprite = "assets/player.png";
         }
-        SDL_Surface * rectangle = NULL ;
-        rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, PIXEL_SIZE, PIXEL_SIZE, 32, 0, 0, 0, 0) ;
-        SDL_FillRect(rectangle, NULL, SDL_MapRGB(rectangle->format, col.r, col.g, col.b));
+        if (sprite == NULL) {
+            continue;
+        }
+        SDL_Surface * sprite_surface = IMG_Load(sprite);
 
         SDL_Rect position = {
             .x = e.pos.x * PIXEL_SIZE,
             .y = e.pos.y * PIXEL_SIZE + TOP_MARGIN
         };
-        SDL_BlitSurface(rectangle, NULL, screen, &position);
+        SDL_BlitSurface(sprite_surface, NULL, screen, &position);
+        sprite = NULL;
     }
-
-    //SDL_Flip(screen);
 }
 
 Vec2D getBoardSize(char *board, int length) {

@@ -1,6 +1,7 @@
 #include "game.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,6 +18,10 @@ int main(int argc, char *argv[])
     if(TTF_Init() == -1){
         fprintf(stderr,"Unable to initialize TTF: %s\n",
         TTF_GetError());
+    }
+    if (IMG_Init(IMG_INIT_PNG) == 0) {
+        fprintf(stderr,"Unable to initialize IMG: %s\n",
+        IMG_GetError());
     }
 
     TTF_Font * police = NULL ;
