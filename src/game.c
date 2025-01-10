@@ -12,6 +12,7 @@
 #include <SDL/SDL_video.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <wchar.h>
 
 #pragma GCC diagnostic ignored "-Wswitch"
@@ -40,6 +41,10 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
     game->game_font = game_font;
     game->current_level = 1;
 
+    for (int i = 0; i < MAX_LEVEL; i++) {
+        game->score[i] = 0;
+    }
+
     GameFlags flags = {
         .running = 1,
         .paused = 0,
@@ -49,7 +54,7 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
 
     game->flags = flags;
 
-    game->button_count = 6;
+    game->button_count = 7;
     game->components = malloc(sizeof(Component) * game->button_count);
 
     Component txt_win = {
@@ -141,12 +146,30 @@ Game * initGame(SDL_Surface *screen, TTF_Font *game_font) {
             .enabled = 0
         }
     };
+    
+    char score_display_text[9];
+    strcpy(score_display_text, "0");
+    Component txt_score = {
+        DEFAULT_COMPONENT_INITIALIZERS,
+        .type = TEXT_DISPLAY,
+        .id = "txt_score",
+        .text = score_display_text,
+        .pos = {896, 0},
+        .size = {128, 32},
+        .flags = {
+            .refreshAfterCallback = 0,
+            .visible = 1,
+            .enabled = 0
+        }
+    };
+
     game->components[0] = txt_win;
     game->components[1] = btn_options;
     game->components[2] = btn_reset;
     game->components[3] = btn_quit;
     game->components[4] = btn_resume;
     game->components[5] = surface_menu;
+    game->components[6] = txt_score;
     
     char level_path[28];
     sprintf(level_path, "levels/level%d.scb", game->current_level);
@@ -181,22 +204,22 @@ void runGame(Game *game) {
                         break;
                     case SDLK_UP:
                         if (game->flags.paused) continue;
-                        movePlayer(game->board, DIRECTION_UP);
+                        movePlayer(game, DIRECTION_UP);
                         game->flags.draw = 1;
                         break;
                     case SDLK_DOWN:
                         if (game->flags.paused) continue;
-                        movePlayer(game->board, DIRECTION_DOWN);
+                        movePlayer(game, DIRECTION_DOWN);
                         game->flags.draw = 1;
                         break;
                     case SDLK_RIGHT:
                         if (game->flags.paused) continue;
-                        movePlayer(game->board, DIRECTION_RIGHT);
+                        movePlayer(game, DIRECTION_RIGHT);
                         game->flags.draw = 1;
                         break;
                     case SDLK_LEFT:
                         if (game->flags.paused) continue;
-                        movePlayer(game->board, DIRECTION_LEFT);
+                        movePlayer(game, DIRECTION_LEFT);
                         game->flags.draw = 1;
                         break;
                 }
@@ -213,7 +236,7 @@ void runGame(Game *game) {
                 break;
         }
         if (checkWin(game->board)) {
-            printf("Victoire ! Niveau %d terminé !\n", game->current_level);
+            printf("Victoire ! Niveau %d terminé avec un score de %d!\n", game->current_level, game->score[game->current_level - 1]);
             drawGameToSurface(game);
             SDL_Delay(1000);
             if (game->current_level < MAX_LEVEL) {
@@ -251,6 +274,8 @@ void runGame(Game *game) {
 void resetGameBoard(Game *game) {
     initEntities(game->board);
     togglePauseMenu_V(game, 0);
+    game->score[game->current_level - 1] = 0;
+    strcpy(game->components[6].text, "0");
 }
 
 void freeGame(Game *game) {
@@ -284,7 +309,8 @@ void drawGameToSurface(Game *game) {
     SDL_Flip(game->screen);
 }
 
-void movePlayer(Board *b, Direction dir) {
+void movePlayer(Game *g, Direction dir) {
+    Board *b = g->board;
     Vec2D vec = getVecFromDirection(dir);
     for (int i=0; i<b->entity_count; i++) {
         Entity * e = &b->entities[i];
@@ -305,6 +331,8 @@ void movePlayer(Board *b, Direction dir) {
             }
         }
     }
+    g->score[g->current_level - 1]++;
+    sprintf(g->components[6].text, "%d", g->score[g->current_level - 1]);
 }
 
 Bool moveEntity(Board *b, Entity *e, Direction dir) {

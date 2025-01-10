@@ -25,6 +25,7 @@ typedef struct Game_I {
     int current_level;
     int button_count;
     Component * components;
+    int score[MAX_LEVEL];
 } Game;
 
 /**
@@ -55,7 +56,7 @@ void resetGameBoard(Game *game);
 /**
  * Déplace toutes les entités joueur dans la direction spécifiée
  */
-void movePlayer(Board *b, Direction dir);
+void movePlayer(Game *g, Direction dir);
 
 /**
  * Déplace une entité dans la direction spécifiée
