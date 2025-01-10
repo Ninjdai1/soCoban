@@ -10,6 +10,7 @@
 
 int main(int argc, char *argv[])
 {
+    printf("SoCoban  Copyright (C) 2025  Phantaemon, Ninjdai\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under certain conditions.\n\n\n");
     if(SDL_Init(SDL_INIT_VIDEO)==-1){
         fprintf(stderr,"Error while loading SDL :%s\n",
         SDL_GetError());
